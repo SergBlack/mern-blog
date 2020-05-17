@@ -2,7 +2,7 @@ const {Router} = require('express');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const {check, validationResult} = require(('express-validator'));
+const {check, validationResult} = require('express-validator');
 const User = require('../models/User');
 const router = Router();
 
@@ -18,7 +18,7 @@ router.post(
     const errors = validationResult(request);
 
     if(!errors.isEmpty()) {
-      return response(400).json({
+      return response.status(400).json({
         errors: errors.array(),
         message: 'Некорректные данные при регистрации'
       })
@@ -37,7 +37,9 @@ router.post(
 
     await user.save();
 
-    response.status(201).json({ message: "Пользователь создан" })
+    response.status(201).json({ message: "Пользователь создан" });
+
+
 
   } catch (e) {
     response.status(500).json({ message: 'Что-то пошло не так, попробуйте еще раз.' })
