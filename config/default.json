@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecret": "howToCreateMernApp",
+  "mongoUri":"mongodb+srv://ventura:1234qwer@cluster0-xx8yi.azure.mongodb.net/app?retryWrites=true&w=majority"
+}
