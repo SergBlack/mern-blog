@@ -42,7 +42,7 @@ router.post(
 
 
   } catch (e) {
-    response.status(500).json({ message: 'Что-то пошло не так, попробуйте еще раз.' })
+    response.status(500).json({ message: 'Что-то пошло не так, попробуйте еще раз.' });
   }
 });
 // /api/auth/login
