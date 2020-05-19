@@ -1,10 +1,10 @@
 import React from "react";
 
-export const AboutPage = () => {
+export const AccountPage = () => {
   return (
     <div>
       <h1>
-        Информация о блоге!
+        AccountPage!
       </h1>
     </div>
   )
