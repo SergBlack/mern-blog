@@ -12,17 +12,26 @@ export const Navbar = () => {
     history.push('/');
   };
 
+  const  loginHandler = event => {
+    event.preventDefault();
+    auth.login();
+    history.push('/auth');
+  };
+
   return (
     <nav>
       <div className="nav-wrapper blue-grey darken-1">
         <span className="brand-logo">БЛОГ</span>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li><NavLink to="/main">Главная</NavLink></li>
-          <li><NavLink to="/create">Создать пост</NavLink></li>
+          { auth.isAuthenticated && <li><NavLink to="/create">Создать пост</NavLink></li> }
           <li><NavLink to="/links">Ссылки</NavLink></li>
           <li><NavLink to="/about">О блоге</NavLink></li>
-          <li><NavLink to="/account">Аккаунт</NavLink></li>
-          <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
+          { auth.isAuthenticated && <li><NavLink to="/account">Аккаунт</NavLink></li> }
+          { auth.isAuthenticated
+            ? <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
+            : <li><a href="/" onClick={loginHandler}>Войти</a></li>
+          }
         </ul>
       </div>
     </nav>
