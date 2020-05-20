@@ -6,7 +6,7 @@ import {LinksList} from "../components/LinksList";
 
 export const LinksPage = () => {
   const [links, setLinks] = useState([]);
-  const {loading, request} =useHttp();
+  const {loading, request} = useHttp();
   const {token} = useContext(AuthContext);
 
   const fetchLinks = useCallback( async () => {

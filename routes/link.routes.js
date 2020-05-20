@@ -18,7 +18,7 @@ router.post('/generate', auth, async (request, response) => {
       return response.json({ link: existing });
     }
 
-    const to = baseUrl + '/t' + code;
+    const to = `${baseUrl}/t/${code}`;
 
     const link = new Link({
       code, to, from, owner: request.user.userId
