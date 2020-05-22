@@ -4,8 +4,7 @@ const router = Router();
 
 router.get('/:code', async (req, res) => {
   try {
-
-    const link = await Link.findOne({ code: req.params.code });
+    const link = await Link.findOne({code: req.params.code});
 
     if (link) {
       link.clicks++;
@@ -14,9 +13,10 @@ router.get('/:code', async (req, res) => {
     }
 
     res.status(404).json('Ссылка не найдена');
-
-  }catch (e) {
-    res.status(500).json({ message: 'Что-то пошло не так, попробуйте еще раз.' });
+  } catch (e) {
+    res.status(500).json({
+      message: 'Что-то пошло не так, попробуйте еще раз.'
+    });
   }
 });
 

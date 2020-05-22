@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react';
 
-export const PostsList = ({ posts }) => {
-
+export const PostsList = ({posts}) => {
   if (!posts.length) {
-    return <p className="center">Постов пока нет</p>
+    return <p className="center">Постов пока нет</p>;
   }
 
   return (
@@ -21,7 +20,9 @@ export const PostsList = ({ posts }) => {
                   <p>{post.content}</p>
                 </div>
                 <div className="card-content right-align">
-                  <p>Дата написания: <strong>{new Date(post.date).toLocaleDateString()}</strong></p>
+                  <p>Дата написания:
+                    <strong>{new Date(post.date).toLocaleDateString()}</strong>
+                  </p>
                   <p><strong>Прочитано: </strong>{post.reads}</p>
                 </div>
                 <div className="card-action">
@@ -30,7 +31,7 @@ export const PostsList = ({ posts }) => {
               </div>
             </div>
 
-            {/*<div className="col">*/}
+            {/* <div className="col">*/}
             {/*  <div className="col s12 m6">*/}
             {/*    <div className="card medium white darken-1">*/}
             {/*      <div className="card-content black-grey-text" >*/}
@@ -43,10 +44,10 @@ export const PostsList = ({ posts }) => {
             {/*      </div>*/}
             {/*    </div>*/}
             {/*  </div>*/}
-            {/*</div>*/}
+            {/* </div>*/}
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 };

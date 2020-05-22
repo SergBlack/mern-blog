@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const AccountPage = () => {
   return (
@@ -7,5 +7,5 @@ export const AccountPage = () => {
         AccountPage!
       </h1>
     </div>
-  )
+  );
 };

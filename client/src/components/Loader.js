@@ -1,8 +1,14 @@
-import React from "react";
+import React from 'react';
 
 export const Loader = () => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2rem' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '2rem',
+      }}
+    >
       <div className="preloader-wrapper small active">
         <div className="spinner-layer spinner-green-only">
           <div className="circle-clipper left">
@@ -17,5 +23,5 @@ export const Loader = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };

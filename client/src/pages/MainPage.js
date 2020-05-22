@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {useHttp} from "../hooks/http.hook";
-import {Loader} from "../components/Loader";
-import {LinksList} from "../components/LinksList";
-import {PostsList} from "../components/PostsList";
+import React, {useCallback, useEffect, useState} from 'react';
+import {useHttp} from '../hooks/http.hook';
+import {Loader} from '../components/Loader';
+import {LinksList} from '../components/LinksList';
+import {PostsList} from '../components/PostsList';
 
 export const MainPage = () => {
   const [posts, setPosts] = useState([]);
-  const { loading, request } = useHttp();
+  const {loading, request} = useHttp();
 
   const fetchPosts = useCallback( async () => {
     try {
@@ -22,12 +22,12 @@ export const MainPage = () => {
   }, [fetchPosts]);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
     <>
       { !loading && <PostsList posts={posts} />}
     </>
-  )
+  );
 };
