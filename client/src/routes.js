@@ -1,15 +1,15 @@
-import React from "react";
-import {Route, Switch, Redirect} from "react-router-dom";
-import {MainPage} from "./pages/MainPage";
-import {CreatePage} from "./pages/CreatePage";
-import {DetailPage} from "./pages/DetailPage";
-import {AuthPage} from "./pages/AuthPage";
-import {LinksPage} from "./pages/LinksPage";
-import {AboutPage} from "./pages/AboutPage";
-import {AccountPage} from "./pages/AccountPage";
+import React from 'react';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import {MainPage} from './pages/MainPage';
+import {CreatePage} from './pages/CreatePage';
+import {DetailPage} from './pages/DetailPage';
+import {AuthPage} from './pages/AuthPage';
+import {LinksPage} from './pages/LinksPage';
+import {AboutPage} from './pages/AboutPage';
+import {AccountPage} from './pages/AccountPage';
 
-export const useRoutes = isAuthenticated => {
-  if(isAuthenticated){
+export const useRoutes = (isAuthenticated) => {
+  if (isAuthenticated) {
     return (
       <Switch>
         <Route path="/" exact>
@@ -39,7 +39,7 @@ export const useRoutes = isAuthenticated => {
       <Route path="/auth" exact>
         <AuthPage/>
       </Route>
-      {/*<Redirect to="/"/>*/}
+      {/* <Redirect to="/"/>*/}
       <Route path="/" exact>
         <MainPage/>
       </Route>
