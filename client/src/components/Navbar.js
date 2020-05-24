@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   toolbarSecondary: {
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     overflowX: 'auto',
     backgroundColor: '#607d8b',
   },
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     backgroundColor: '#607d8b',
     color: 'black',
-    fontSize: '14px',
+    fontSize: 'medium',
   },
 }));
 

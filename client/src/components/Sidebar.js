@@ -21,7 +21,7 @@ const Sidebar = (props) => {
   const {archives, description, social, title} = props;
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item >
       <Paper elevation={0} className={classes.sidebarAboutBox}>
         <Typography variant="h6" gutterBottom>
           {title}
@@ -29,7 +29,7 @@ const Sidebar = (props) => {
         <Typography>{description}</Typography>
       </Paper>
       <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Archives
+        Archives
       </Typography>
       {archives.map((archive) => (
         <Link
@@ -42,7 +42,7 @@ const Sidebar = (props) => {
         </Link>
       ))}
       <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Social
+        Social
       </Typography>
       {social.map((network) => (
         <Link display="block" variant="body1" href="#" key={network.__id}>
@@ -53,7 +53,7 @@ const Sidebar = (props) => {
       ))}
     </Grid>
   );
-}
+};
 
 Sidebar.propTypes = {
   archives: PropTypes.array,

@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
-import {Loader} from '../components/Loader';
 import FeaturedPost from '../components/FeaturedPost';
 import MainPost from '../components/MainPost';
 import Sidebar from '../components/Sidebar';
@@ -13,11 +12,12 @@ import Hidden from '@material-ui/core/Hidden';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import Markdown from 'markdown-to-jsx';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   markdown: {
     ...theme.typography.body2,
@@ -33,11 +33,18 @@ const useStyles = makeStyles((theme) => ({
     width: 150,
     height: 150,
   },
+  progressBar: {
+    height: '200px',
+  },
+  section: {
+    marginTop: '24px',
+    marginBottom: '16px',
+  },
 }));
 
 const mainPost = {
   title: 'Заголовок длинного недавнего поста',
-  description:
+  content:
     'Multiple lines of text that form the lede, ' +
     'informing new readers quickly and efficiently about what\'s ' +
     'most interesting in this post\'s contents.',
@@ -90,65 +97,108 @@ export const MainPage = () => {
     fetchPosts();
   }, [fetchPosts]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <>
       <main>
         <MainPost post={mainPost}/>
-        <Grid container spacing={4}>
-          {
-            !loading && <FeaturedPost posts={posts} />
-          }
-        </Grid>
-        <Grid container spacing={5} className={classes.mainGrid}>
-          {/* <Main title="From the firehose" posts={posts} />*/}
-          <Grid item xs={12} md={8} container spacing={4}>
-            <Typography variant="h6" gutterBottom>
-              Предыдущие посты
-            </Typography>
-            <Divider />
-            {posts.map((post) => (
-              <Grid item xs={12} md={12} key={post._id}>
-                <CardActionArea component="a" href="#">
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {post.title}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {new Date(post.date).toLocaleDateString()}
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          {`${post.content.substring(0, 1000)}...`}
-                        </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          Продолжить чтение...
-                        </Typography>
-                        <p>Прочитано: {post.reads}</p>
-                      </CardContent>
-                    </div>
-                    <Hidden xsDown>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image={mainPost.image}
-                        title={'imageTitle'}
-                      />
-                    </Hidden>
-                  </Card>
-                </CardActionArea>
-              </Grid>
-            ))}
+        <Typography variant="h6" paragraph className={classes.section}>
+          Недавние публикации
+        </Typography>
+        <Divider />
+        {
+          loading ?
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            className={classes.progressBar}
+          >
+            <CircularProgress />
+          </Grid> : <FeaturedPost posts={posts} />
+        }
+        <Typography variant="h6" paragraph className={classes.section}>
+          Ранние публикации
+        </Typography>
+        <Divider />
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+        >
+          <Grid
+            container
+            xs={12}
+            md={8}
+            direction="column"
+            justify="center"
+            className={classes.mainGrid}
+            spacing={1}
+          >
+            {loading ?
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                className={classes.progressBar}
+              >
+                <CircularProgress/>
+              </Grid> :
+              <>
+                {posts.map((post) => (
+                  <Grid item key={post._id}>
+                    <CardActionArea component="a" href="#">
+                      <Card className={classes.card}>
+                        <div className={classes.cardDetails}>
+                          <CardContent>
+                            <Typography component="h2" variant="h5">
+                              {post.title}
+                            </Typography>
+                            <Typography
+                              variant="subtitle1"
+                              color="textSecondary"
+                            >
+                              {new Date(post.date).toLocaleDateString()}
+                            </Typography>
+                            <Typography variant="subtitle1" paragraph>
+                              {`${post.content.substring(0, 1000)}...`}
+                            </Typography>
+                            <Typography variant="subtitle1" color="primary">
+                              Продолжить чтение...
+                            </Typography>
+                            <p>Прочитано: {post.reads}</p>
+                          </CardContent>
+                        </div>
+                        <Hidden xsDown>
+                          <CardMedia
+                            className={classes.cardMedia}
+                            image={mainPost.image}
+                            title={'imageTitle'}
+                          />
+                        </Hidden>
+                      </Card>
+                    </CardActionArea>
+                  </Grid>
+                ))}
+              </>
+            }
           </Grid>
-          <Sidebar
-            title={sidebar.title}
-            description={sidebar.description}
-            archives={sidebar.archives}
-            social={sidebar.social}
-          />
+          <Grid
+            container
+            xs={12}
+            md={4}
+            direction="column"
+            justify="flex-start"
+            alignItems="stretch"
+            className={classes.mainGrid}
+            spacing={1}
+          >
+            <Sidebar
+              title={sidebar.title}
+              description={sidebar.description}
+              archives={sidebar.archives}
+              social={sidebar.social}
+            />
+          </Grid>
         </Grid>
       </main>
     </>

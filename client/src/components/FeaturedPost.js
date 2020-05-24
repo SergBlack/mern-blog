@@ -9,7 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  mainGrid: {
+    marginTop: theme.spacing(1),
+  },
   card: {
     display: 'flex',
   },
@@ -19,7 +22,7 @@ const useStyles = makeStyles({
   cardMedia: {
     width: 160,
   },
-});
+}));
 
 const FeaturedPost = (props) => {
   const classes = useStyles();
@@ -28,11 +31,16 @@ const FeaturedPost = (props) => {
   const imageTitle = 'image text';
 
   return (
-    <>
-      {
-        posts.map((post, i) => {
-          return (
-            i < 2 ?
+    <Grid
+      container
+      direction="row"
+      justify="space-between"
+      className={classes.mainGrid}
+      spacing={2}
+    >
+      {posts.map((post, i) => {
+        return (
+          i < 2 ?
             <Grid item xs={12} md={6} key={post._id}>
               <CardActionArea component="a" href="#">
                 <Card className={classes.card}>
@@ -63,12 +71,10 @@ const FeaturedPost = (props) => {
                 </Card>
               </CardActionArea>
             </Grid> :
-              null
-          );
-        })
-      }
-
-    </>
+            null
+        );
+      })}
+    </Grid>
   );
 };
 

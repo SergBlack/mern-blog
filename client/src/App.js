@@ -4,16 +4,16 @@ import {useRoutes} from './routes';
 import {useAuth} from './hooks/auth.hook';
 import {AuthContext} from './context/AuthContext';
 import {Navbar} from './components/Navbar';
-import {Loader} from './components/Loader';
 import Footer from './components/Footer';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
-// import Blog from './templates/Blog';
 
 const useStyles = makeStyles((theme) => ({
-  mainGrid: {
-    marginTop: theme.spacing(3),
+  grid: {
+    height: '500px',
   },
 }));
 
@@ -23,10 +23,6 @@ const App = () => {
   const routes = useRoutes(isAuthenticated);
   const classes = useStyles();
 
-  if (!ready) {
-    return <Loader />;
-  }
-
   return (
     <AuthContext.Provider value={{
       token, login, logout, userId, isAuthenticated,
@@ -35,8 +31,18 @@ const App = () => {
         <Container maxWidth="lg">
           <CssBaseline>
             <Navbar />
-            {routes}
-            {/* <Blog/>*/}
+            {ready ?
+              routes :
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                className={classes.grid}
+              >
+                <CircularProgress />
+              </Grid>
+            }
             <Footer />
           </CssBaseline>
         </Container>
