@@ -126,9 +126,10 @@ export const MainPage = () => {
           justify="space-between"
         >
           <Grid
-            container
+            item
             xs={12}
             md={8}
+            container
             direction="column"
             justify="center"
             className={classes.mainGrid}
@@ -183,9 +184,10 @@ export const MainPage = () => {
             }
           </Grid>
           <Grid
-            container
+            item
             xs={12}
             md={4}
+            container
             direction="column"
             justify="flex-start"
             alignItems="stretch"

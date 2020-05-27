@@ -28,7 +28,7 @@ const App = () => {
       token, login, logout, userId, isAuthenticated,
     }}>
       <BrowserRouter>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <CssBaseline>
             <Navbar />
             {ready ?
