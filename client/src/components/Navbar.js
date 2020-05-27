@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Navbar = () => {
+const Navbar = () => {
   const classes = useStyles();
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -81,8 +81,10 @@ export const Navbar = () => {
           noWrap
           className={classes.toolbarTitle}
         >
-          Блог неЮного программиста
-          <code style={{fontSize: '10px'}}>import Geek from &#34;real-life&#34;;</code>
+          Блог совершеннолетнего программиста
+          <code style={{fontSize: '10px', paddingLeft: '10px'}}>
+            import Me from &#34;real-life&#34;;
+          </code>
         </Typography>
         <IconButton>
           <Home />
@@ -135,3 +137,5 @@ Navbar.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string,
 };
+
+export default Navbar;

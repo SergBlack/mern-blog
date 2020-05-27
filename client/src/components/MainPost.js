@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   mainPost: {
@@ -35,9 +36,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainPost(props) {
+const post = {
+  title: 'Заголовок длинного недавнего поста',
+  content:
+    'Тут будет распологаться самый последний пост по дате',
+  image: 'https://source.unsplash.com/random',
+  imgText: 'main image description',
+  linkText: 'Continue reading…',
+};
+
+const MainPost = () => {
   const classes = useStyles();
-  const {post} = props;
 
   return (
     <Paper
@@ -63,15 +72,19 @@ export default function MainPost(props) {
               {post.content}
             </Typography>
             <Link variant="subtitle1" href="#">
-              Открыть...
+              <Button variant="contained" color="primary">
+                Открыть...
+              </Button>
             </Link>
           </div>
         </Grid>
       </Grid>
     </Paper>
   );
-}
+};
 
 MainPost.propTypes = {
   post: PropTypes.object,
 };
+
+export default MainPost;

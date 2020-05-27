@@ -3,7 +3,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {useRoutes} from './routes';
 import {useAuth} from './hooks/auth.hook';
 import {AuthContext} from './context/AuthContext';
-import {Navbar} from './components/Navbar';
+import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -28,7 +28,7 @@ const App = () => {
       token, login, logout, userId, isAuthenticated,
     }}>
       <BrowserRouter>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <CssBaseline>
             <Navbar />
             {ready ?

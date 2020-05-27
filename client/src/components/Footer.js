@@ -4,21 +4,21 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import {GitHub, Home, LinkedIn, Twitter} from '@material-ui/icons';
+import {GitHub, LinkedIn, Twitter} from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="/">
         http://mysite.org
       </Link>
-      {` ${new Date().getFullYear()}.`}
+      {` ${new Date().getFullYear()}`}
     </Typography>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Footer(props) {
+const Footer = () => {
   const classes = useStyles();
 
   return (
     <footer className={classes.footer}>
       <Container maxWidth="lg">
         <Typography variant="h6" align="center" gutterBottom>
-          TODO:title
+          Forward-only
         </Typography>
         <Typography
           variant="subtitle1"
@@ -43,7 +43,7 @@ export default function Footer(props) {
           color="textSecondary"
           component="p"
         >
-          TODO:description
+          Блог совершеннолетнего программиста
         </Typography>
         <Grid container justify="center">
           <IconButton>
@@ -60,9 +60,11 @@ export default function Footer(props) {
       </Container>
     </footer>
   );
-}
+};
 
 Footer.propTypes = {
   description: PropTypes.string,
   title: PropTypes.string,
 };
+
+export default Footer;

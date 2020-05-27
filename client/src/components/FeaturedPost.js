@@ -24,9 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FeaturedPost = (props) => {
+const FeaturedPost = ({posts}) => {
   const classes = useStyles();
-  const {posts} = props;
   const postImg = 'https://source.unsplash.com/random';
   const imageTitle = 'image text';
 
@@ -36,7 +35,7 @@ const FeaturedPost = (props) => {
       direction="row"
       justify="space-between"
       className={classes.mainGrid}
-      spacing={2}
+      spacing={4}
     >
       {posts.map((post, i) => {
         return (
@@ -50,7 +49,7 @@ const FeaturedPost = (props) => {
                         {post.title}
                       </Typography>
                       <Typography variant="subtitle1" color="textSecondary">
-                        {new Date(post.date).toLocaleDateString()}
+                        {new Date(post.date).toLocaleDateString('ru-RU')}
                       </Typography>
                       <Typography variant="subtitle1" paragraph>
                         {`${post.content.substring(0, 120)}...`}

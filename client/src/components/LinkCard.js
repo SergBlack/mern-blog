@@ -25,7 +25,7 @@ export const LinkCard = ({link}) => {
       <p>Количество кликов по ссылке: <strong>{link.clicks}</strong></p>
       <p>Дата создания:
         <strong>
-          {new Date(link.date).toLocaleDateString()}
+          {new Date(link.date).toLocaleDateString('ru-RU')}
         </strong></p>
     </>
   );
