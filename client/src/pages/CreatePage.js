@@ -2,6 +2,16 @@ import React, {useContext, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext';
 import {useHistory} from 'react-router-dom';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles(() => ({
+  textarea: {
+    border: '1px solid grey',
+  },
+}));
 
 export const CreatePage = () => {
   const history = useHistory();
@@ -10,9 +20,9 @@ export const CreatePage = () => {
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
   const [post, setPost] = useState('');
+  const classes = useStyles();
 
   const addLink = async (event) => {
-    // if (event.key === 'Enter') {
     try {
       const data = await request(
           '/api/link/generate',
@@ -24,7 +34,6 @@ export const CreatePage = () => {
     } catch (e) {
       console.log(e);
     }
-    // }
   };
 
   const addPost = async (event) => {
@@ -45,33 +54,30 @@ export const CreatePage = () => {
   };
 
   return (
-    <div className="col">
-      <div className="col s8 offset-s2" style={{paddingTop: '2rem'}}>
+    <div>
+      <div>
         <input
           placeholder="Вставьте ссылку"
           id="link"
           type="text"
           value={link}
           onChange={(e) => setLink(e.target.value)}
-          // onKeyPress={pressHandler}
         />
         <button
-          className="btn waves-effect waves-light"
           type="submit"
           name="action"
           onClick={addLink}
         >
           Добавить ссылку
         </button>
-
-
       </div>
-      <div className="col">
-        <div className="col s12 m6">
-          <div className="card medium white darken-1">
-            <div className="card-content black-grey-text">
-              <span className="card-title left-align">Заголовок</span>
-              <div className="input-field">
+
+      <Paper>
+        <div>
+          <div>
+            <div >
+              <span>Заголовок</span>
+              <div>
                 <input
                   id="post"
                   type="text"
@@ -80,48 +86,47 @@ export const CreatePage = () => {
                 />
                 <label
                   htmlFor="post"
-                  className="right-align"
                 >
                   Введите заголовок
                 </label>
               </div>
-              <form className="col s12">
-                <span className="card-title left-align">Текст поста</span>
-                <div className="input-field">
-                  <textarea
-                    id="textPost"
-                    className="materialize-textarea"
+              <form>
+                <span>Текст поста</span>
+                <div>
+                  <TextareaAutosize
+                    className={classes.textarea}
+                    rowsMin={10}
+                    cols={80}
+                    placeholder="Введите текст.."
+                    id="postText"
                     value={post}
                     onChange={(e) => setPost(e.target.value)}
                   />
-                  <label htmlFor="textPost">Введите текст</label>
+                  <label htmlFor="postText">Введите сообщение поста</label>
                 </div>
               </form>
             </div>
-
-            {/* <form action="#">*/}
-            <div className="file-field input-field">
-              <div className="btn">
+            <div>
+              <div >
                 <span>Файл</span>
                 <input type="file"/>
               </div>
-              <div className="file-path-wrapper">
-                <input className="file-path validate" type="text"/>
+              <div >
+                <input type="text"/>
               </div>
             </div>
-            {/* </form>*/}
-
-            <button
-              className="btn waves-effect waves-light"
+            <Button
               type="submit"
               name="action"
+              variant="contained"
+              color="primary"
               onClick={addPost}
             >
-                Добавить пост
-            </button>
+              Добавить пост
+            </Button>
           </div>
         </div>
-      </div>
+      </Paper>
 
     </div>
   );

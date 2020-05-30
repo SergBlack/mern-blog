@@ -8,6 +8,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
+import ReactMarkdown from 'markdown-to-jsx';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -28,6 +29,7 @@ const FeaturedPost = ({posts}) => {
   const classes = useStyles();
   const postImg = 'https://source.unsplash.com/random';
   const imageTitle = 'image text';
+  const featuredPosts = [posts[1], posts[2]];
 
   return (
     <Grid
@@ -37,40 +39,40 @@ const FeaturedPost = ({posts}) => {
       className={classes.mainGrid}
       spacing={4}
     >
-      {posts.map((post, i) => {
+      {featuredPosts.map((post) => {
         return (
-          i < 2 ?
-            <Grid item xs={12} md={6} key={post._id}>
-              <CardActionArea component="a" href="#">
-                <Card className={classes.card}>
-                  <div className={classes.cardDetails}>
-                    <CardContent>
-                      <Typography component="h2" variant="h5">
-                        {post.title}
-                      </Typography>
-                      <Typography variant="subtitle1" color="textSecondary">
-                        {new Date(post.date).toLocaleDateString('ru-RU')}
-                      </Typography>
-                      <Typography variant="subtitle1" paragraph>
+          <Grid item xs={12} md={6} key={post._id}>
+            <CardActionArea component="a" href="#">
+              <Card className={classes.card}>
+                <div className={classes.cardDetails}>
+                  <CardContent>
+                    <Typography component="h2" variant="h5">
+                      {post.title}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      {new Date(post.date).toLocaleDateString('ru-RU')}
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                      <ReactMarkdown>
                         {`${post.content.substring(0, 120)}...`}
-                      </Typography>
-                      <Typography variant="subtitle1" color="primary">
-                        Продолжить чтение...
-                      </Typography>
-                      <p>Прочитано: {post.reads}</p>
-                    </CardContent>
-                  </div>
-                  <Hidden xsDown>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={postImg}
-                      title={imageTitle}
-                    />
-                  </Hidden>
-                </Card>
-              </CardActionArea>
-            </Grid> :
-            null
+                      </ReactMarkdown>
+                    </Typography>
+                    <Typography variant="subtitle1" color="primary">
+                      Продолжить чтение...
+                    </Typography>
+                    <p>Прочитано: {post.reads}</p>
+                  </CardContent>
+                </div>
+                <Hidden xsDown>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={postImg}
+                    title={imageTitle}
+                  />
+                </Hidden>
+              </Card>
+            </CardActionArea>
+          </Grid>
         );
       })}
     </Grid>

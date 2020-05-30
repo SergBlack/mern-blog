@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import CardMedia from '@material-ui/core/CardMedia';
 import {makeStyles} from '@material-ui/core/styles';
+import ReactMarkdown from 'react-markdown';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import coy from 'react-syntax-highlighter/dist/esm/styles/prism/coy';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -26,12 +29,21 @@ const random = {
   image: 'https://source.unsplash.com/random',
 };
 
+const CodeBlock = ({language, value}) => {
+  return (
+    <SyntaxHighlighter language={language} style={coy}>
+      {value}
+    </SyntaxHighlighter>
+  );
+};
+
 const PostsList = ({posts}) => {
   const classes = useStyles();
+  const postsList = posts.splice(0, 3);
 
   return (
     <>
-      {posts.map((post) => (
+      {postsList.map((post) => (
         <Grid item key={post._id}>
           <CardActionArea component="a" href="#">
             <Card className={classes.card}>
@@ -46,8 +58,12 @@ const PostsList = ({posts}) => {
                   >
                     {new Date(post.date).toLocaleDateString('ru-RU')}
                   </Typography>
-                  <Typography variant="subtitle1" paragraph>
-                    {`${post.content.substring(0, 1000)}...`}
+                  <Typography variant="subtitle1" >
+                    <ReactMarkdown
+                      source={post.content}
+                      renderers={{code: CodeBlock}}
+                    >
+                    </ReactMarkdown>
                   </Typography>
                   <Typography variant="subtitle1" color="primary">
                     Продолжить чтение...

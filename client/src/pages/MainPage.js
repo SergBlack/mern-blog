@@ -31,7 +31,7 @@ export const MainPage = () => {
   const fetchPosts = useCallback( async () => {
     try {
       const fetchedPosts = await request('/api/post/all', 'GET', null);
-      setPosts(fetchedPosts);
+      setPosts(fetchedPosts.reverse());
     } catch (e) {
 
     }
@@ -44,13 +44,21 @@ export const MainPage = () => {
   return (
     <>
       <main>
-        <MainPost />
-        <Typography variant="h6" paragraph className={classes.section}>
+        {loading || posts.length === 0 ?
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              className={classes.progressBar}
+            >
+              <CircularProgress />
+            </Grid> : <MainPost posts={posts}/>
+        }
+        <Typography variant="h6" className={classes.section}>
           Недавние публикации
         </Typography>
         <Divider />
-        {
-          loading ?
+        {loading || posts.length === 0 ?
           <Grid
             container
             justify="center"
@@ -60,7 +68,7 @@ export const MainPage = () => {
             <CircularProgress />
           </Grid> : <FeaturedPost posts={posts}/>
         }
-        <Typography variant="h6" paragraph className={classes.section}>
+        <Typography variant="h6" className={classes.section}>
           Ранние публикации
         </Typography>
         <Divider />
@@ -79,7 +87,7 @@ export const MainPage = () => {
             className={classes.mainGrid}
             spacing={5}
           >
-            {loading ?
+            {loading || posts.length === 0 ?
               <Grid
                 container
                 justify="center"
@@ -88,7 +96,7 @@ export const MainPage = () => {
               >
                 <CircularProgress/>
               </Grid> :
-              <PostsList loading={loading} posts={posts}/>
+              <PostsList posts={posts}/>
             }
           </Grid>
           <Grid

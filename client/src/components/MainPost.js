@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -36,25 +37,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const post = {
-  title: 'Заголовок длинного недавнего поста',
-  content:
-    'Тут будет распологаться самый последний пост по дате',
-  image: 'https://source.unsplash.com/random',
-  imgText: 'main image description',
-  linkText: 'Continue reading…',
-};
+// const post = {
+//   title: 'Заголовок длинного недавнего поста',
+//   content:
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
+//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате',
+//   image: 'https://source.unsplash.com/random',
+//   imgText: 'main image description',
+//   linkText: 'Continue reading…',
+// };
 
-const MainPost = () => {
+const MainPost = ({posts}) => {
   const classes = useStyles();
+  const mainPost = posts[0];
 
   return (
     <Paper
       className={classes.mainPost}
-      style={{backgroundImage: `url(${post.image})`}}
+      style={{backgroundImage: `url(${mainPost.image})`}}
     >
       {
-        <img style={{display: 'none'}} src={post.image} alt={post.imageText} />
+        <img
+          style={{display: 'none'}}
+          src={mainPost.image}
+          alt={mainPost.imageText}
+        />
       }
       <div className={classes.overlay} />
       <Grid container>
@@ -66,10 +79,12 @@ const MainPost = () => {
               color="inherit"
               gutterBottom
             >
-              {post.title}
+              {mainPost.title}
             </Typography>
-            <Typography variant="h5" color="inherit" paragraph>
-              {post.content}
+            <Typography variant="h5" color="inherit" >
+              <ReactMarkdown>
+                {mainPost.content}
+              </ReactMarkdown>
             </Typography>
             <Link variant="subtitle1" href="#">
               <Button variant="contained" color="primary">
@@ -84,7 +99,7 @@ const MainPost = () => {
 };
 
 MainPost.propTypes = {
-  post: PropTypes.object,
+  posts: PropTypes.array,
 };
 
 export default MainPost;
