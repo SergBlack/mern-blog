@@ -4,8 +4,8 @@ import {AuthContext} from '../context/AuthContext';
 import {useHistory} from 'react-router-dom';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(() => ({
   textarea: {
@@ -20,6 +20,7 @@ export const CreatePage = () => {
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
   const [post, setPost] = useState('');
+  const [image, setImage] = useState(null);
   const classes = useStyles();
 
   const addLink = async (event) => {
@@ -44,6 +45,10 @@ export const CreatePage = () => {
           {
             content: post,
             title: title,
+            image: {
+              type: 'image/png',
+              data: image,
+            },
           },
           {Authorization: `Bearer ${auth.token}`},
       );
@@ -51,6 +56,12 @@ export const CreatePage = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const onFileChosen = (file) => {
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => setImage(fileReader.result);
+    fileReader.readAsDataURL(file);
   };
 
   return (
@@ -109,7 +120,13 @@ export const CreatePage = () => {
             <div>
               <div >
                 <span>Файл</span>
-                <input type="file"/>
+                <input
+                  type="file"
+                  onChange={(e) => onFileChosen(e.target.files[0])}
+                />
+                {
+                  image && <img src={image}/>
+                }
               </div>
               <div >
                 <input type="text"/>

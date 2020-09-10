@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     display: 'flex',
+    maxHeight: '250px',
   },
   cardDetails: {
     flex: 1,
@@ -58,9 +59,8 @@ const FeaturedPost = ({posts}) => {
                       </ReactMarkdown>
                     </Typography>
                     <Typography variant="subtitle1" color="primary">
-                      Продолжить чтение...
+                      Нажмите, чтобы продолжить чтение...
                     </Typography>
-                    <p>Прочитано: {post.reads}</p>
                   </CardContent>
                 </div>
                 <Hidden xsDown>

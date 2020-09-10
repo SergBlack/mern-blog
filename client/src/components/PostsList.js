@@ -66,7 +66,7 @@ const PostsList = ({posts}) => {
                     </ReactMarkdown>
                   </Typography>
                   <Typography variant="subtitle1" color="primary">
-                    Продолжить чтение...
+                    Нажмите, чтобы продолжить чтение...
                   </Typography>
                   <p>Прочитано: {post.reads}</p>
                 </CardContent>

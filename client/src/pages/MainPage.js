@@ -52,7 +52,7 @@ export const MainPage = () => {
               className={classes.progressBar}
             >
               <CircularProgress />
-            </Grid> : <MainPost posts={posts}/>
+            </Grid> : <MainPost mainPost={posts && posts[0]}/>
         }
         <Typography variant="h6" className={classes.section}>
           Недавние публикации

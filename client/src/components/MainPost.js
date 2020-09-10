@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -53,9 +54,13 @@ const useStyles = makeStyles((theme) => ({
 //   linkText: 'Continue reading…',
 // };
 
-const MainPost = ({posts}) => {
+const MainPost = ({mainPost}) => {
   const classes = useStyles();
-  const mainPost = posts[0];
+  const history = useHistory();
+
+  const openPost = (id) => {
+    history.push(`/post/${id}`);
+  }
 
   return (
     <Paper
@@ -82,12 +87,16 @@ const MainPost = ({posts}) => {
               {mainPost.title}
             </Typography>
             <Typography variant="h5" color="inherit" >
-              <ReactMarkdown>
-                {mainPost.content}
-              </ReactMarkdown>
+              <ReactMarkdown
+                source={`${mainPost.content.substring(0, 120)}...`}
+              />
             </Typography>
             <Link variant="subtitle1" href="#">
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => openPost(mainPost._id)}
+              >
                 Открыть...
               </Button>
             </Link>
@@ -99,7 +108,8 @@ const MainPost = ({posts}) => {
 };
 
 MainPost.propTypes = {
-  posts: PropTypes.array,
+  mainPost: PropTypes.array,
+  history: PropTypes.object,
 };
 
 export default MainPost;
