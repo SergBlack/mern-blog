@@ -19,9 +19,12 @@ export const CreatePage = () => {
   const {request} = useHttp();
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [post, setPost] = useState('');
   const [image, setImage] = useState(null);
   const classes = useStyles();
+  const MAX_TITLE_LENGTH = 60;
+  const MAX_DESC_LENGTH = 120;
 
   const addLink = async (event) => {
     try {
@@ -39,16 +42,15 @@ export const CreatePage = () => {
 
   const addPost = async (event) => {
     try {
+      console.log('image: ', image);
       const data = await request(
           '/api/post/new',
           'POST',
           {
             content: post,
-            title: title,
-            image: {
-              type: 'image/png',
-              data: image,
-            },
+            title,
+            description,
+            image,
           },
           {Authorization: `Bearer ${auth.token}`},
       );
@@ -62,6 +64,9 @@ export const CreatePage = () => {
     const fileReader = new FileReader();
     fileReader.onloadend = () => setImage(fileReader.result);
     fileReader.readAsDataURL(file);
+    // const formData = new FormData();
+    // formData.append('image', file)
+    // setImage(file);
   };
 
   return (
@@ -98,7 +103,26 @@ export const CreatePage = () => {
                 <label
                   htmlFor="post"
                 >
-                  Введите заголовок
+                  Введите заголовок.
+                  Осталось знаков {MAX_TITLE_LENGTH - title.length}
+                </label>
+              </div>
+              <span>Описание поста</span>
+              <div>
+                <TextareaAutosize
+                  id="description"
+                  type="text"
+                  rowsMin={3}
+                  cols={80}
+                  placeholder="Введите текст.."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <label
+                  htmlFor="description"
+                >
+                  Введите описание.
+                  Осталось знаков {MAX_DESC_LENGTH - description.length}
                 </label>
               </div>
               <form>
@@ -125,7 +149,7 @@ export const CreatePage = () => {
                   onChange={(e) => onFileChosen(e.target.files[0])}
                 />
                 {
-                  image && <img src={image}/>
+                  image && <img src={image} style={{maxHeight: '250px'}}/>
                 }
               </div>
               <div >

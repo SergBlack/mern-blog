@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import {CodeBlock} from '../utils/markdown';
 
 const useStyles = makeStyles((theme) => ({
   mainPost: {
@@ -15,10 +16,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    height: '450px',
   },
   overlay: {
     position: 'absolute',
@@ -38,34 +39,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const post = {
-//   title: 'Заголовок длинного недавнего поста',
-//   content:
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате' +
-//     '*Тут* **будет** ~~распологаться~~ самый последний пост по дате',
-//   image: 'https://source.unsplash.com/random',
-//   imgText: 'main image description',
-//   linkText: 'Continue reading…',
-// };
-
 const MainPost = ({mainPost}) => {
   const classes = useStyles();
   const history = useHistory();
 
   const openPost = (id) => {
     history.push(`/post/${id}`);
-  }
+  };
 
   return (
     <Paper
       className={classes.mainPost}
       style={{backgroundImage: `url(${mainPost.image})`}}
+      // style={{backgroundImage: 'url(https://source.unsplash.com/random)'}}
     >
       {
         <img
@@ -76,7 +62,7 @@ const MainPost = ({mainPost}) => {
       }
       <div className={classes.overlay} />
       <Grid container>
-        <Grid item md={6}>
+        <Grid>
           <div className={classes.mainPostContent}>
             <Typography
               component="h1"
@@ -87,9 +73,7 @@ const MainPost = ({mainPost}) => {
               {mainPost.title}
             </Typography>
             <Typography variant="h5" color="inherit" >
-              <ReactMarkdown
-                source={`${mainPost.content.substring(0, 120)}...`}
-              />
+              {mainPost.description}
             </Typography>
             <Link variant="subtitle1" href="#">
               <Button
@@ -108,7 +92,7 @@ const MainPost = ({mainPost}) => {
 };
 
 MainPost.propTypes = {
-  mainPost: PropTypes.array,
+  mainPost: PropTypes.object,
   history: PropTypes.object,
 };
 

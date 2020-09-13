@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {useHttp} from '../hooks/http.hook';
 import ReactMarkdown from 'react-markdown';
+import {CodeBlock} from '../utils/markdown';
 
 const PostPage = ({match}) => {
   const [posts, setPosts] = useState([]);
@@ -28,12 +29,12 @@ const PostPage = ({match}) => {
     }
   });
 
-  console.log(currentPost)
-
   return (
     <div>
-     PostPage
-      <ReactMarkdown source={currentPost.content}/>
+      <ReactMarkdown
+        source={currentPost.content}
+        renderers={{code: CodeBlock}}
+      />
     </div>
   );
 };

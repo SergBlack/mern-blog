@@ -31,7 +31,8 @@
     "express-validator": "^6.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.14",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "remarkable": "latest"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",

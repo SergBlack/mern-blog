@@ -5,16 +5,21 @@ const router = Router();
 
 router.post('/new', auth, async (req, res) => {
   try {
-    const {title, content} = req.body;
+    const {title, content, description, image} = req.body;
+    console.log(req.body)
     const post = new Post({
-      title, content, owner: req.user.userId,
+      title,
+      content,
+      description,
+      image,
+      owner: req.user.userId,
     });
     await post.save();
     res.status(201).json({post});
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
   }
-}
+},
 );
 
 router.get('/all', async (req, res) => {
