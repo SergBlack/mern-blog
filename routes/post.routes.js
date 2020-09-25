@@ -6,11 +6,10 @@ const router = Router();
 router.post('/new', auth, async (req, res) => {
   try {
     const {title, content, description, image} = req.body;
-    console.log(req.body)
     const post = new Post({
       title,
-      content,
       description,
+      content,
       image,
       owner: req.user.userId,
     });

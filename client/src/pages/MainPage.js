@@ -40,7 +40,6 @@ export const MainPage = () => {
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
-
   return (
     <>
       <main>

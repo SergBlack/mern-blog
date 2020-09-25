@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
 import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import {CodeBlock} from '../utils/markdown';
 
 const useStyles = makeStyles((theme) => ({
   mainPost: {
@@ -46,20 +44,11 @@ const MainPost = ({mainPost}) => {
   const openPost = (id) => {
     history.push(`/post/${id}`);
   };
-
   return (
     <Paper
       className={classes.mainPost}
       style={{backgroundImage: `url(${mainPost.image})`}}
-      // style={{backgroundImage: 'url(https://source.unsplash.com/random)'}}
     >
-      {
-        <img
-          style={{display: 'none'}}
-          src={mainPost.image}
-          alt={mainPost.imageText}
-        />
-      }
       <div className={classes.overlay} />
       <Grid container>
         <Grid>

@@ -9,8 +9,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
-import ReactMarkdown from 'react-markdown';
-import {CodeBlock} from '../utils/markdown';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -32,7 +30,6 @@ const FeaturedPost = ({posts}) => {
   const history = useHistory();
   const classes = useStyles();
 
-  const postImg = 'https://source.unsplash.com/random';
   const imageTitle = 'image text';
   const featuredPosts = [posts[1], posts[2]];
   const openPost = (id) => {
@@ -49,7 +46,7 @@ const FeaturedPost = ({posts}) => {
       component="div"
     >
       {
-        featuredPosts.map((post) => {
+        featuredPosts && featuredPosts.map((post) => {
           return (
             <Grid item xs={12} md={6} key={post._id} component="div">
               <CardActionArea
@@ -81,7 +78,7 @@ const FeaturedPost = ({posts}) => {
                   <Hidden xsDown>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={postImg}
+                      image={post.image}
                       title={imageTitle}
                     />
                   </Hidden>

@@ -24,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const random = {
-  image: 'https://source.unsplash.com/random',
-};
-
 const PostsList = ({posts}) => {
   const history = useHistory();
   const classes = useStyles();
@@ -77,7 +73,7 @@ const PostsList = ({posts}) => {
                 <Hidden xsDown>
                   <CardMedia
                     className={classes.cardMedia}
-                    image={random.image}
+                    image={post.image}
                     title={'imageTitle'}
                   />
                 </Hidden>
