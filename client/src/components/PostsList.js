@@ -13,15 +13,24 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
-    height: '300px',
+    height: '240px',
   },
   cardDetails: {
     flex: 5,
   },
   cardMedia: {
     width: 150,
-    height: 150,
+    height: '100%',
   },
+  cardDescription: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '20px 0px',
+    height: '80px',
+  },
+  cardFooter: {
+
+  }
 }));
 
 const PostsList = ({posts}) => {
@@ -57,7 +66,11 @@ const PostsList = ({posts}) => {
                     >
                       {new Date(post.date).toLocaleDateString('ru-RU')}
                     </Typography>
-                    <Typography variant="subtitle1" component="div">
+                    <Typography
+                      className={classes.cardDescription}
+                      variant="subtitle1"
+                      component="div"
+                    >
                       {post.description}
                     </Typography>
                     <Typography
@@ -75,6 +88,7 @@ const PostsList = ({posts}) => {
                     className={classes.cardMedia}
                     image={post.image}
                     title={'imageTitle'}
+                    component="div"
                   />
                 </Hidden>
               </Card>

@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
   cardMedia: {
     width: 160,
   },
+  cardDescription: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '20px 0px',
+    height: '80px',
+  },
 }));
 
 const FeaturedPost = ({posts}) => {
@@ -67,7 +73,10 @@ const FeaturedPost = ({posts}) => {
                       >
                         {new Date(post.date).toLocaleDateString('ru-RU')}
                       </Typography>
-                      <Typography variant="subtitle1" >
+                      <Typography
+                        variant="subtitle1"
+                        className={classes.cardDescription}
+                      >
                         {post.description}
                       </Typography>
                       <Typography variant="subtitle1" color="primary">

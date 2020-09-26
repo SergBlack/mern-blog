@@ -35,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 0,
     },
   },
+  cardDescription: {
+    display: 'flex',
+    alignItems: 'top',
+    margin: '20px 0px',
+    height: '180px',
+  },
 }));
 
 const MainPost = ({mainPost}) => {
@@ -61,7 +67,11 @@ const MainPost = ({mainPost}) => {
             >
               {mainPost.title}
             </Typography>
-            <Typography variant="h5" color="inherit" >
+            <Typography
+              variant="h5"
+              color="inherit"
+              className={classes.cardDescription}
+            >
               {mainPost.description}
             </Typography>
             <Link variant="subtitle1" href="#">

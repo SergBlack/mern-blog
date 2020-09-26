@@ -1,0 +1,14 @@
+.postPage {
+  display: flex;
+}
+
+.postsContainer {
+  width: 300px;
+}
+
+.currentPostContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border: 1px solid lightgrey;
+}

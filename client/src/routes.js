@@ -7,7 +7,7 @@ import {AuthPage} from './pages/AuthPage';
 import {LinksPage} from './pages/LinksPage';
 import {AboutPage} from './pages/AboutPage';
 import {AccountPage} from './pages/AccountPage';
-import PostPage from './pages/PostPage';
+import PostPage from './pages/PostPage/PostPage';
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
