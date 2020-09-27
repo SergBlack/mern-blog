@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router-dom';
+import {withRouter, useHistory} from 'react-router-dom';
 import {useHttp} from '../../hooks/http.hook';
 import styles from './PostPage.module.css';
 import ReactMarkdown from 'react-markdown';
@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 const PostPage = ({match}) => {
   const [posts, setPosts] = useState([]);
   const {loading, request} = useHttp();
+  const history = useHistory();
 
   const fetchPosts = useCallback( async () => {
     try {
@@ -31,18 +32,29 @@ const PostPage = ({match}) => {
     }
   });
 
+  const openPost = (id) => {
+    history.push(`/post/${id}`);
+  };
+
   return (
     <div className={styles.postPage}>
       <div className={styles.postsContainer}>
+        <h2>Список постов</h2>
         {
           loading ?
             <CircularProgress /> :
             <>
               {
                 posts.map((post) => (
-                  <div key={post.__id}>
-                    <h3>{post.title}</h3>
-                    <div>{new Date(post.date).toLocaleDateString('ru-RU')}</div>
+                  <div
+                    key={post._id}
+                    className={styles.postItem}
+                    onClick={() => openPost(post._id)}
+                  >
+                    <h3 className={styles.postItemTitle}>{post.title}</h3>
+                    <div className={styles.postItemData}>
+                      {new Date(post.date).toLocaleDateString('ru-RU')}
+                    </div>
                   </div>
                 ))
               }
@@ -50,15 +62,16 @@ const PostPage = ({match}) => {
         }
       </div>
       <div className={styles.currentPostContainer}>
+        <h2>Открытый пост</h2>
         {
           loading ?
             <CircularProgress /> :
             (
               <>
+                <h1>{currentPost.title}</h1>
                 <div>
                   {new Date(currentPost.date).toLocaleDateString('ru-RU')}
                 </div>
-                <h1>{currentPost.title}</h1>
               </>
             )}
         <ReactMarkdown
