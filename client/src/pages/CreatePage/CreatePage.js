@@ -55,6 +55,7 @@ export const CreatePage = () => {
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       setImage(fileReader.result);
+      console.log(fileReader)
     };
     fileReader.readAsDataURL(file);
   };
@@ -142,6 +143,10 @@ export const CreatePage = () => {
 
         <button type="submit">
           Добавить пост
+        </button>
+
+        <button onClick={() => console.log(image)}>
+          State
         </button>
 
       </form>

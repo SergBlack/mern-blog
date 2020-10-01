@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import MainPost from '../components/MainPost';
 import FeaturedPost from '../components/FeaturedPost';
-import PostsList from '../components/PostsList';
+import PostsList from '../components/PostsList/PostsList';
 import Sidebar from '../components/Sidebar';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
@@ -21,6 +21,25 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '24px',
     marginBottom: '16px',
   },
+  postsListContainer: {
+    display: 'flex',
+    paddingTop: '20px',
+  },
+  postsListWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '72%',
+    margin: '-8px -8px',
+  },
+  sidebarWrapper: {
+    display: 'flex',
+    marginLeft: '30px',
+    width: '28%',
+  },
+  postsList: {
+    display: 'flex',
+  }
 }));
 
 export const MainPage = () => {
@@ -65,53 +84,28 @@ export const MainPage = () => {
             className={classes.progressBar}
           >
             <CircularProgress />
-          </Grid> : <FeaturedPost posts={posts}/>
+          </Grid> : <FeaturedPost posts={posts.slice(1, 4)}/>
         }
         <Typography variant="h6" className={classes.section}>
           Ранние публикации
         </Typography>
         <Divider />
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-        >
-          <Grid
-            item
-            xs={12}
-            md={8}
-            container
-            direction="column"
-            justify="center"
-            className={classes.mainGrid}
-            spacing={5}
-          >
+        <div className={classes.postsListContainer}>
+          <div className={classes.postsListWrapper}>
             {loading || posts.length === 0 ?
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                className={classes.progressBar}
-              >
+              <div>
                 <CircularProgress/>
-              </Grid> :
-              <PostsList posts={posts}/>
+              </div> :
+              <PostsList
+                posts={posts.slice(4)}
+                className={classes.postsList}
+              />
             }
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            className={classes.mainGrid}
-            spacing={5}
-          >
+          </div>
+          <div className={classes.sidebarWrapper}>
             <Sidebar />
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </main>
     </>
   );

@@ -39,7 +39,7 @@ const PostPage = ({match}) => {
   return (
     <div className={styles.postPage}>
       <div className={styles.postsContainer}>
-        <h2>Список постов</h2>
+        <div className={styles.postsContainerTitle}>Список других постов</div>
         {
           loading ?
             <CircularProgress /> :
@@ -62,15 +62,16 @@ const PostPage = ({match}) => {
         }
       </div>
       <div className={styles.currentPostContainer}>
-        <h2>Открытый пост</h2>
         {
           loading ?
             <CircularProgress /> :
             (
               <>
-                <h1>{currentPost.title}</h1>
-                <div>
-                  {new Date(currentPost.date).toLocaleDateString('ru-RU')}
+                <h1 className={styles.currentPostTitle}>{currentPost.title}</h1>
+                <div className={styles.currentPostData}>
+                  Дата создания: {
+                    new Date(currentPost.date).toLocaleDateString('ru-RU')
+                  }
                 </div>
               </>
             )}
