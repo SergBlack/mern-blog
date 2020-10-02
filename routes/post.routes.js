@@ -5,13 +5,14 @@ const router = Router();
 
 router.post('/new', auth, async (req, res) => {
   try {
-    const {title, content, description, image} = req.body;
+    const {title, content, description, image, technology} = req.body;
     const post = new Post({
       title,
       description,
       content,
       image,
       owner: req.user.userId,
+      technology,
     });
     await post.save();
     res.status(201).json({post});

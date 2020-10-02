@@ -2,3 +2,17 @@
   display: flex;
   flex-direction: column;
 }
+
+.postDescriptionTextarea {
+  border-radius: 5px;
+  border: 1px solid #cfcfcf;
+  resize: none;
+}
+
+.postTextTextarea {
+  border-radius: 5px;
+  border: 1px solid #cfcfcf;
+  resize: none;
+  width: 980px;
+  height: 480px;
+}

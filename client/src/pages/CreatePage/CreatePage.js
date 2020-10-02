@@ -3,6 +3,7 @@ import styles from './CreatePage.module.css';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
 import {useHistory} from 'react-router-dom';
+import MarkdownBtnsPanel from '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
 
 export const CreatePage = () => {
   const history = useHistory();
@@ -13,6 +14,7 @@ export const CreatePage = () => {
   const [description, setDescription] = useState('');
   const [postContent, setPostContent] = useState('');
   const [image, setImage] = useState(null);
+  const [technology, setTechnology] = useState('');
   const MAX_TITLE_LENGTH = 60;
   const MAX_DESC_LENGTH = 120;
 
@@ -42,6 +44,7 @@ export const CreatePage = () => {
             title,
             description,
             image,
+            technology,
           },
           {Authorization: `Bearer ${auth.token}`},
       );
@@ -55,14 +58,18 @@ export const CreatePage = () => {
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
       setImage(fileReader.result);
-      console.log(fileReader)
     };
     fileReader.readAsDataURL(file);
   };
 
+  const onSymbolSelect = (event, symbol) => {
+    event.preventDefault();
+    setPostContent(`${postContent}${symbol}`);
+  };
+
   return (
     <div className={styles.createFormContainer}>
-      <form onSubmit={addPost}>
+      <form>
         <div>
           <input
             placeholder="Вставьте ссылку"
@@ -97,8 +104,27 @@ export const CreatePage = () => {
         </div>
 
         <div>
+          <div>Технология</div>
+          <input
+            id="technology"
+            type="text"
+            value={technology}
+            onChange={(e) => setTechnology(e.target.value)}
+          />
+          <label
+            htmlFor="technology"
+          >
+            Введите используемые технологии
+          </label>
+        </div>
+
+        <div>
           <div>Описание поста</div>
           <textarea
+            className={styles.postDescriptionTextarea}
+            cols={60}
+            rows={2}
+            maxLength={120}
             id="description"
             placeholder="Введите текст.."
             value={description}
@@ -114,7 +140,9 @@ export const CreatePage = () => {
 
         <div>
           <div>Текст поста</div>
+          <MarkdownBtnsPanel onSymbolSelect={onSymbolSelect}/>
           <textarea
+            className={styles.postTextTextarea}
             placeholder="Введите текст.."
             id="postText"
             value={postContent}
@@ -141,12 +169,8 @@ export const CreatePage = () => {
           </div>
         </div>
 
-        <button type="submit">
+        <button onClick={addPost}>
           Добавить пост
-        </button>
-
-        <button onClick={() => console.log(image)}>
-          State
         </button>
 
       </form>
