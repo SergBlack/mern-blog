@@ -31,4 +31,26 @@ router.get('/all', async (req, res) => {
   }
 });
 
+router.patch('/post/:id', auth, (req, res) => {
+  try {
+    if (req.body._id && req.body._id != req.params.id) {
+      return res.status(400).json(
+          {error: 'ID в запросе не соответствует ID в URL'},
+      );
+    }
+
+    delete req.body._id;
+    req.collection.updateById(
+        req.params.id,
+        {$set: req.body},
+        (e, results) => {
+          console.log('boo', e, results);
+          res.json(results);
+        },
+    );
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
+  }
+});
+
 module.exports = router;
