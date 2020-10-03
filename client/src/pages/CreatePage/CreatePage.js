@@ -141,14 +141,14 @@ export const CreatePage = () => {
         <div>
           <div>Текст поста</div>
           <MarkdownBtnsPanel onSymbolSelect={onSymbolSelect}/>
+          <label htmlFor="postContent">Введите сообщение поста</label>
           <textarea
-            className={styles.postTextTextarea}
+            className={styles.postContentTextarea}
             placeholder="Введите текст.."
-            id="postText"
+            id="postContent"
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
           />
-          <label htmlFor="postText">Введите сообщение поста</label>
         </div>
 
         <div >

@@ -9,10 +9,10 @@
   resize: none;
 }
 
-.postTextTextarea {
+.postContentTextarea {
   border-radius: 5px;
   border: 1px solid #cfcfcf;
   resize: none;
-  width: 980px;
+  width: 780px;
   height: 480px;
 }

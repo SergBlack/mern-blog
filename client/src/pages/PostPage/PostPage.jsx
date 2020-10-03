@@ -1,13 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {withRouter, useHistory} from 'react-router-dom';
 import {useHttp} from '../../hooks/http.hook';
 import styles from './PostPage.module.css';
 import ReactMarkdown from 'react-markdown';
 import {CodeBlock} from '../../utils/markdown';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import {AuthContext} from '../../context/AuthContext';
-import MarkdownBtnsPanel from '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
+import MarkdownBtnsPanel from
+  '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
+import PostsAsideBar from '../../components/PostsAsideBar/PostsAsideBar';
+import CircularProgress from
+  '@material-ui/core/CircularProgress/CircularProgress';
 
 const PostPage = ({match}) => {
   const [posts, setPosts] = useState([]);
@@ -22,7 +25,7 @@ const PostPage = ({match}) => {
       const fetchedPosts = await request('/api/post/all', 'GET', null);
       setPosts(fetchedPosts.reverse());
     } catch (e) {
-
+      console.log(e);
     }
   }, [request]);
 
@@ -52,29 +55,7 @@ const PostPage = ({match}) => {
 
   return (
     <div className={styles.postPage}>
-      <div className={styles.postsContainer}>
-        <div className={styles.postsContainerTitle}>Список других постов</div>
-        {
-          loading ?
-            <CircularProgress /> :
-            <>
-              {
-                posts.map((post) => (
-                  <div
-                    key={post._id}
-                    className={styles.postItem}
-                    onClick={() => openPost(post._id)}
-                  >
-                    <h3 className={styles.postItemTitle}>{post.title}</h3>
-                    <div className={styles.postItemData}>
-                      {new Date(post.date).toLocaleDateString('ru-RU')}
-                    </div>
-                  </div>
-                ))
-              }
-            </>
-        }
-      </div>
+      <PostsAsideBar posts={posts} openPost={openPost} loadingPosts={loading} />
       <div className={styles.currentPostContainer}>
         {
           loading ?

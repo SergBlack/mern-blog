@@ -1,0 +1,14 @@
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  flex-wrap: wrap;
+  margin-right: 24px;
+}
+
+.postsContainerTitle {
+  font-size: 20px;
+  margin: 10px auto 6px auto;
+  align-self: center;
+}
+
