@@ -74,7 +74,7 @@ const MainPost = ({mainPost}) => {
             >
               {mainPost.description}
             </Typography>
-            <Link variant="subtitle1" href="#">
+            <Link variant="subtitle1" href="">
               <Button
                 variant="contained"
                 color="primary"

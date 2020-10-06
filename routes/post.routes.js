@@ -31,23 +31,18 @@ router.get('/all', async (req, res) => {
   }
 });
 
-router.patch('/post/:id', auth, (req, res) => {
+router.put('/:id/update', auth, async (req, res) => {
   try {
-    if (req.body._id && req.body._id != req.params.id) {
-      return res.status(400).json(
-          {error: 'ID в запросе не соответствует ID в URL'},
-      );
+    const {id} = req.body;
+    const post = await Post.findOne({_id: id});
+    if (!post) {
+      res.status(404)
+          .json({message: 'Ошибка. Поста с таким ID не существует.'});
+    } else {
+      post.content = req.body.content;
     }
-
-    delete req.body._id;
-    req.collection.updateById(
-        req.params.id,
-        {$set: req.body},
-        (e, results) => {
-          console.log('boo', e, results);
-          res.json(results);
-        },
-    );
+    post.save();
+    res.json(post);
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
   }

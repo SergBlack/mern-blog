@@ -3,7 +3,8 @@ import styles from './CreatePage.module.css';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
 import {useHistory} from 'react-router-dom';
-import MarkdownBtnsPanel from '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
+import MarkdownBtnsPanel from
+  '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
 
 export const CreatePage = () => {
   const history = useHistory();
@@ -48,11 +49,30 @@ export const CreatePage = () => {
           },
           {Authorization: `Bearer ${auth.token}`},
       );
-      history.push(`/main`);
+      history.push(`/post/${data.post._id}`);
     } catch (e) {
       console.log(e);
     }
   };
+
+  // const updatePost = async (id) => {
+  //   try {
+  //     const data = await request(
+  //       `/api/post/${id}/update`,
+  //       'PUT',
+  //       {
+  //         content: postContent,
+  //         id,
+  //       },
+  //       {Authorization: `Bearer ${auth.token}`},
+  //     );
+  //     setIsEditPost(false);
+  //     setPostContent(data.content);
+  //     history.push(`/post/${data._id}`);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const onFileChosen = (file) => {
     const fileReader = new FileReader();
@@ -177,3 +197,4 @@ export const CreatePage = () => {
     </div>
   );
 };
+

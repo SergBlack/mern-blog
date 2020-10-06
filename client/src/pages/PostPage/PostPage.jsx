@@ -6,16 +6,12 @@ import styles from './PostPage.module.css';
 import ReactMarkdown from 'react-markdown';
 import {CodeBlock} from '../../utils/markdown';
 import {AuthContext} from '../../context/AuthContext';
-import MarkdownBtnsPanel from
-  '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
 import PostsAsideBar from '../../components/PostsAsideBar/PostsAsideBar';
 import CircularProgress from
   '@material-ui/core/CircularProgress/CircularProgress';
 
 const PostPage = ({match}) => {
   const [posts, setPosts] = useState([]);
-  const [isEditPost, setIsEditPost] = useState(false);
-  const [postContent, setPostContent] = useState('');
   const {loading, request} = useHttp();
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -33,7 +29,7 @@ const PostPage = ({match}) => {
     fetchPosts();
   }, [fetchPosts]);
 
-  let currentPost = '';
+  let currentPost = {};
   posts.forEach((post) => {
     if (post._id === match.params.id) {
       currentPost = post;
@@ -44,13 +40,8 @@ const PostPage = ({match}) => {
     history.push(`/post/${id}`);
   };
 
-  const editPost = (postContent) => {
-    setIsEditPost(!isEditPost);
-    setPostContent(postContent);
-  };
-
-  const savePost = () => {
-
+  const updatePost = (id) => {
+    history.push(`/create/${id}`);
   };
 
   return (
@@ -69,40 +60,19 @@ const PostPage = ({match}) => {
                   }
                   {
                     auth.isAuthenticated && (
-                      <>
-                        { isEditPost ? (
-                          <button onClick={() => savePost()}>
-                            Save
-                          </button>
-                        ) : (
-                          <button onClick={() => editPost(currentPost.content)}>
-                            Edit
-                          </button>
-                          )
-                        }
-                      </>
+                      <button onClick={() => updatePost(currentPost._id)}>
+                        Edit
+                      </button>
                     )
                   }
                 </div>
               </>
-            )}
-        {
-          isEditPost ? (
-            <>
-              <MarkdownBtnsPanel />
-              <textarea
-                id="postText"
-                value={currentPost.content}
-                onChange={(e) => setPostContent(e.target.value)}
-              />
-            </>
-          ) : (
-            <ReactMarkdown
-              source={currentPost.content}
-              renderers={{code: CodeBlock}}
-            />
-          )
+            )
         }
+        <ReactMarkdown
+          source={currentPost.content}
+          renderers={{code: CodeBlock}}
+        />
       </div>
     </div>
   );

@@ -18,6 +18,12 @@
   align-self: center;
 }
 
+.currentPostContent {
+  display: flex;
+  height: 100%;
+  resize: none;
+}
+
 pre {
   border: 1px solid #d3d3d3;
   border-radius: 3px;
