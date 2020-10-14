@@ -47,9 +47,11 @@ const MainPost = ({mainPost}) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const openPost = (id) => {
+  const openPost = (e, id) => {
+    e.preventDefault();
     history.push(`/post/${id}`);
   };
+
   return (
     <Paper
       className={classes.mainPost}
@@ -78,7 +80,7 @@ const MainPost = ({mainPost}) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => openPost(mainPost._id)}
+                onClick={(e) => openPost(e, mainPost._id)}
               >
                 Открыть...
               </Button>

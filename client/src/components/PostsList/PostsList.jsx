@@ -9,7 +9,8 @@ const PostsList = ({posts}) => {
   // const postsList = posts.splice(0, 3);
   const postsList = posts;
 
-  const openPost = (id) => {
+  const openPost = (e, id) => {
+    e.preventDefault();
     history.push(`/post/${id}`);
   };
 
@@ -24,7 +25,7 @@ const PostsList = ({posts}) => {
             <a
               className={styles.cardActionArea}
               href=""
-              onClick={() => openPost(post._id)}
+              onClick={(e) => openPost(e, post._id)}
             >
               <div className={styles.card}>
                 <div className={styles.cardTitle}>

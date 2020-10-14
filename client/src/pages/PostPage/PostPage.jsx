@@ -1,7 +1,11 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {withRouter, useHistory} from 'react-router-dom';
-import {useHttp} from '../../hooks/http.hook';
+import {useHistory, useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {
+  fetchPost as fetchPostAction,
+  fetchPosts as fetchPostsAction,
+} from '../../redux/actions';
 import styles from './PostPage.module.css';
 import ReactMarkdown from 'react-markdown';
 import {CodeBlock} from '../../utils/markdown';
@@ -10,34 +14,22 @@ import PostsAsideBar from '../../components/PostsAsideBar/PostsAsideBar';
 import CircularProgress from
   '@material-ui/core/CircularProgress/CircularProgress';
 
-const PostPage = ({match}) => {
-  const [posts, setPosts] = useState([]);
-  const {loading, request} = useHttp();
+const PostPage = ({fetchPost, fetchPosts, posts, currentPost, loading}) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
-
-  const fetchPosts = useCallback( async () => {
-    try {
-      const fetchedPosts = await request('/api/post/all', 'GET', null);
-      setPosts(fetchedPosts.reverse());
-    } catch (e) {
-      console.log(e);
-    }
-  }, [request]);
+  const {id} = useParams();
 
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
-
-  let currentPost = {};
-  posts.forEach((post) => {
-    if (post._id === match.params.id) {
-      currentPost = post;
+    if (!posts.length) {
+      fetchPosts();
     }
-  });
+    fetchPost(id);
+  }, []);
 
-  const openPost = (id) => {
+  const openPost = (e, id) => {
+    e.preventDefault();
     history.push(`/post/${id}`);
+    fetchPost(id);
   };
 
   const updatePost = (id) => {
@@ -79,7 +71,22 @@ const PostPage = ({match}) => {
 };
 
 PostPage.propTypes = {
-  match: PropTypes.object,
+  fetchPost: PropTypes.func,
+  fetchPosts: PropTypes.func,
+  posts: PropTypes.array,
+  currentPost: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
-export default withRouter(PostPage);
+const mapStateToProps = (state) => ({
+  posts: state.postsStore.posts,
+  currentPost: state.postsStore.currentPost,
+  loading: state.app.loading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPost: (id) => dispatch(fetchPostAction(id)),
+  fetchPosts: () => dispatch(fetchPostsAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

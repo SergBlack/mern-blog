@@ -6,7 +6,7 @@ const PostsAsideBarItem = ({post, openPost}) => {
   return (
     <div
       className={styles.postItem}
-      onClick={() => openPost(post._id)}
+      onClick={(e) => openPost(e, post._id)}
     >
       <h3 className={styles.postItemTitle}>{post.title}</h3>
       <div className={styles.postItemData}>

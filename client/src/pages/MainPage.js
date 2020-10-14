@@ -1,5 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useHttp} from '../hooks/http.hook';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {fetchPosts as fetchPostsAction} from '../redux/actions';
 import MainPost from '../components/MainPost';
 import FeaturedPost from '../components/FeaturedPost';
 import PostsList from '../components/PostsList/PostsList';
@@ -39,26 +41,16 @@ const useStyles = makeStyles((theme) => ({
   },
   postsList: {
     display: 'flex',
-  }
+  },
 }));
 
-export const MainPage = () => {
-  const [posts, setPosts] = useState([]);
-  const {loading, request} = useHttp();
+const MainPage = ({posts, fetchPosts, loading}) => {
   const classes = useStyles();
-
-  const fetchPosts = useCallback( async () => {
-    try {
-      const fetchedPosts = await request('/api/post/all', 'GET', null);
-      setPosts(fetchedPosts.reverse());
-    } catch (e) {
-
-    }
-  }, [request]);
 
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
+
   return (
     <>
       <main>
@@ -110,3 +102,20 @@ export const MainPage = () => {
     </>
   );
 };
+
+MainPage.propTypes = {
+  posts: PropTypes.array,
+  fetchPosts: PropTypes.func,
+  loading: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  posts: state.postsStore.posts,
+  loading: state.app.loading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPosts: () => dispatch(fetchPostsAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

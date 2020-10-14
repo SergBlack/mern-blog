@@ -31,13 +31,28 @@ router.get('/all', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const {id} = req.params;
+    const post = await Post.findOne({_id: id});
+    if (!post) {
+      res.status(404)
+          .json({message: 'Ошибка. Поста с таким ID не существует.'});
+    } else {
+      res.json(post);
+    }
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
+  }
+});
+
 router.put('/:id/update', auth, async (req, res) => {
   try {
     const {id} = req.body;
     const post = await Post.findOne({_id: id});
     if (!post) {
       res.status(404)
-          .json({message: 'Ошибка. Поста с таким ID не существует.'});
+        .json({message: 'Ошибка. Поста с таким ID не существует.'});
     } else {
       post.content = req.body.content;
     }

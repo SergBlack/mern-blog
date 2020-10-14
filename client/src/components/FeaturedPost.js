@@ -31,7 +31,8 @@ const FeaturedPost = ({posts}) => {
   const history = useHistory();
   const classes = useStyles();
 
-  const openPost = (id) => {
+  const openPost = (e, id) => {
+    e.preventDefault();
     history.push(`/post/${id}`);
   }
 
@@ -52,7 +53,7 @@ const FeaturedPost = ({posts}) => {
                 className={classes.cardActionArea}
                 component="a"
                 href=""
-                onClick={() => openPost(post._id)}
+                onClick={(e) => openPost(e, post._id)}
               >
                 <Card className={classes.card}>
                   <CardHeader
