@@ -8,13 +8,13 @@ const rootReducer = combineReducers({
   app: appReducer,
 });
 
-const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
-
 const store = createStore(
     rootReducer,
     compose(
         applyMiddleware(thunk),
-        ext && window.__REDUX_DEVTOOLS_EXTENSION__(),
+      window.__REDUX_DEVTOOLS_EXTENSION__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION__() :
+        (f) => f,
     ),
 );
 
