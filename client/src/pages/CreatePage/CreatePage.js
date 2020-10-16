@@ -1,12 +1,15 @@
 import React, {useContext, useState} from 'react';
+import PropTypes from 'prop-types';
 import styles from './CreatePage.module.css';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
 import {useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 import MarkdownBtnsPanel from
   '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
+import {addPost as addPostAction} from '../../redux/actions';
 
-export const CreatePage = () => {
+const CreatePage = ({addPost, newPost}) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
   const {request} = useHttp();
@@ -34,46 +37,6 @@ export const CreatePage = () => {
     }
   };
 
-  const addPost = async (event) => {
-    event.preventDefault();
-    try {
-      const data = await request(
-          '/api/post/new',
-          'POST',
-          {
-            content: postContent,
-            title,
-            description,
-            image,
-            technology,
-          },
-          {Authorization: `Bearer ${auth.token}`},
-      );
-      history.push(`/post/${data.post._id}`);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // const updatePost = async (id) => {
-  //   try {
-  //     const data = await request(
-  //       `/api/post/${id}/update`,
-  //       'PUT',
-  //       {
-  //         content: postContent,
-  //         id,
-  //       },
-  //       {Authorization: `Bearer ${auth.token}`},
-  //     );
-  //     setIsEditPost(false);
-  //     setPostContent(data.content);
-  //     history.push(`/post/${data._id}`);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
   const onFileChosen = (file) => {
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
@@ -85,6 +48,23 @@ export const CreatePage = () => {
   const onSymbolSelect = (event, symbol) => {
     event.preventDefault();
     setPostContent(`${postContent}${symbol}`);
+  };
+
+  const createPost = (e) => {
+    e.preventDefault();
+    addPost(
+        auth,
+        {
+          title,
+          description,
+          content: postContent,
+          image,
+          technology,
+        },
+        (id) => {
+          history.push(`/post/${id}`);
+        },
+    );
   };
 
   return (
@@ -189,12 +169,25 @@ export const CreatePage = () => {
           </div>
         </div>
 
-        <button onClick={addPost}>
+        <button onClick={createPost}>
           Добавить пост
         </button>
-
       </form>
     </div>
   );
 };
 
+CreatePage.propTypes = {
+  addPost: PropTypes.func,
+  newPost: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+  newPost: state.postsStore.currentPost,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addPost: (token, post, afterSuccess) => dispatch(addPostAction(token, post, afterSuccess)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);

@@ -19,6 +19,23 @@ export const postsReducer = (state = initialState, action) => {
         currentPost: action.payload,
       };
     }
+    case acts.ADD_POST: {
+      return {
+        ...state,
+        posts: [...state.posts, action.payload],
+        currentPost: action.payload.post,
+      };
+    }
+    case acts.DELETE_POST: {
+      return {
+        ...state,
+      };
+    }
+    case acts.UPDATE_POST: {
+      return {
+        ...state,
+      };
+    }
     default: return state;
   }
 };
