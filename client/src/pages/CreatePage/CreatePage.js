@@ -12,6 +12,7 @@ import {addPost as addPostAction} from '../../redux/actions';
 const CreatePage = ({addPost, newPost}) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
+  const {token} = auth;
   const {request} = useHttp();
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
@@ -53,7 +54,7 @@ const CreatePage = ({addPost, newPost}) => {
   const createPost = (e) => {
     e.preventDefault();
     addPost(
-        auth,
+        token,
         {
           title,
           description,
@@ -163,7 +164,7 @@ const CreatePage = ({addPost, newPost}) => {
               image && <img
                 src={image}
                 style={{maxHeight: '250px'}}
-                alt="image"
+                alt="background"
               />
             }
           </div>

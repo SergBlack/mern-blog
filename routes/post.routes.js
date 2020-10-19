@@ -46,21 +46,36 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id/update', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const {id} = req.body;
-    const post = await Post.findOne({_id: id});
-    if (!post) {
-      res.status(404)
-        .json({message: 'Ошибка. Поста с таким ID не существует.'});
-    } else {
-      post.content = req.body.content;
-    }
-    post.save();
-    res.json(post);
+    const {id} = req.params;
+    await Post.deleteOne(
+        {_id: id},
+        (err) => {
+          console.log(err);
+        },
+    );
+    res.status(201).json({id, message: 'Пост успешно удален'});
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
   }
 });
+
+// router.put('/:id/update', auth, async (req, res) => {
+//   try {
+//     const {id} = req.body;
+//     const post = await Post.findOne({_id: id});
+//     if (!post) {
+//       res.status(404)
+//         .json({message: 'Ошибка. Поста с таким ID не существует.'});
+//     } else {
+//       post.content = req.body.content;
+//     }
+//     post.save();
+//     res.json(post);
+//   } catch (e) {
+//     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
+//   }
+// });
 
 module.exports = router;

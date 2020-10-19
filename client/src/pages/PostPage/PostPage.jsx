@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {
   fetchPost as fetchPostAction,
   fetchPosts as fetchPostsAction,
+  deletePost as deletePostAction,
 } from '../../redux/actions';
 import styles from './PostPage.module.css';
 import ReactMarkdown from 'react-markdown';
@@ -14,9 +15,17 @@ import PostsAsideBar from '../../components/PostsAsideBar/PostsAsideBar';
 import CircularProgress from
   '@material-ui/core/CircularProgress/CircularProgress';
 
-const PostPage = ({fetchPost, fetchPosts, posts, currentPost, loading}) => {
+const PostPage = ({
+  fetchPost,
+  fetchPosts,
+  deletePost,
+  posts,
+  currentPost,
+  loading,
+}) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
+  const {token} = auth;
   const {id} = useParams();
 
   useEffect(() => {
@@ -36,6 +45,16 @@ const PostPage = ({fetchPost, fetchPosts, posts, currentPost, loading}) => {
     history.push(`/create/${id}`);
   };
 
+  const removePost = (id) => {
+    if (window.confirm('Удалить пост?')) {
+      deletePost(
+          token,
+          id,
+          history.push(`/post/${currentPost.id}`),
+      );
+    }
+  };
+
   return (
     <div className={styles.postPage}>
       <PostsAsideBar posts={posts} openPost={openPost} loadingPosts={loading} />
@@ -52,9 +71,16 @@ const PostPage = ({fetchPost, fetchPosts, posts, currentPost, loading}) => {
                   }
                   {
                     auth.isAuthenticated && (
-                      <button onClick={() => updatePost(currentPost._id)}>
-                        Edit
-                      </button>
+                      <>
+                        <button onClick={() => updatePost(currentPost._id)}>
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => removePost(currentPost._id)}
+                        >
+                          Delete
+                        </button>
+                      </>
                     )
                   }
                 </div>
@@ -73,6 +99,7 @@ const PostPage = ({fetchPost, fetchPosts, posts, currentPost, loading}) => {
 PostPage.propTypes = {
   fetchPost: PropTypes.func,
   fetchPosts: PropTypes.func,
+  deletePost: PropTypes.func,
   posts: PropTypes.array,
   currentPost: PropTypes.object,
   loading: PropTypes.bool,
@@ -87,6 +114,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchPost: (id) => dispatch(fetchPostAction(id)),
   fetchPosts: () => dispatch(fetchPostsAction()),
+  deletePost: (token, id, afterSuccess) => {
+    dispatch(deletePostAction(token, id, afterSuccess));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

@@ -1,6 +1,13 @@
 import {acts} from './types';
 import axios from 'axios';
 
+const getConfig = (token) => ({
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
+
 export const fetchPosts = () => {
   return (dispatch) => {
     dispatch({type: acts.START_LOADING});
@@ -31,17 +38,13 @@ export const fetchPost = (id) => {
   };
 };
 
-export const addPost = (auth, post, afterSuccess) => {
-  const config = {
-    headers: {Authorization: `Bearer ${auth.token}`},
-  };
-
-  return async (dispatch) => {
+export const addPost = (token, post, afterSuccess) => {
+  return (dispatch) => {
     dispatch({type: acts.START_LOADING});
     return axios.post(
         '/api/post/new',
         post,
-        config,
+        getConfig(token),
     )
         .then((response) => {
           dispatch({type: acts.ADD_POST, payload: response.data});
@@ -76,10 +79,23 @@ export const addPost = (auth, post, afterSuccess) => {
 //   }
 // };
 //
-// export const deletePost = async (id) => {
-//   try {
-//
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+export const deletePost = (token, id, afterSuccess) => {
+  return (dispatch) => {
+    dispatch({type: acts.START_LOADING});
+    return axios.delete(
+        `/api/post/${id}`,
+        getConfig(token),
+    )
+        .then((response) => {
+          dispatch({type: acts.DELETE_POST, payload: response.data});
+          afterSuccess();
+        })
+        .then(() => {
+          dispatch({type: acts.END_LOADING});
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({type: acts.END_LOADING});
+        });
+  };
+};
