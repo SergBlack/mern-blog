@@ -19,6 +19,9 @@ export const useRoutes = (isAuthenticated) => {
         <Route path="/create">
           <CreatePage/>
         </Route>
+        <Route path="/post/update/:id" exact>
+          <CreatePage/>
+        </Route>
         <Route path="/detail/:id" exact>
           <DetailPage/>
         </Route>

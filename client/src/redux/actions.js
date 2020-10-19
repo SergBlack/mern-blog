@@ -60,26 +60,29 @@ export const addPost = (token, post, afterSuccess) => {
   };
 };
 
-// export const updatePost = async (id) => {
-//   try {
-//     const data = await request(
-//       `/api/post/${id}/update`,
-//       'PUT',
-//       {
-//         content: postContent,
-//         id,
-//       },
-//       {Authorization: `Bearer ${auth.token}`},
-//     );
-//     setIsEditPost(false);
-//     setPostContent(data.content);
-//     history.push(`/post/${data._id}`);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-//
-export const deletePost = (token, id, afterSuccess) => {
+export const updatePost = (token, id, post, afterSuccess) => {
+  return (dispatch) => {
+    dispatch({type: acts.START_LOADING});
+    return axios.put(
+        `/api/post/update/${id}`,
+        post,
+        getConfig(token),
+    )
+        .then((response) => {
+          dispatch({type: acts.UPDATE_POST, payload: response.data});
+          afterSuccess(response.data.post._id);
+        })
+        .then(() => {
+          dispatch({type: acts.END_LOADING});
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({type: acts.END_LOADING});
+        });
+  };
+};
+
+export const deletePost = (token, id) => {
   return (dispatch) => {
     dispatch({type: acts.START_LOADING});
     return axios.delete(
@@ -88,7 +91,6 @@ export const deletePost = (token, id, afterSuccess) => {
     )
         .then((response) => {
           dispatch({type: acts.DELETE_POST, payload: response.data});
-          afterSuccess();
         })
         .then(() => {
           dispatch({type: acts.END_LOADING});

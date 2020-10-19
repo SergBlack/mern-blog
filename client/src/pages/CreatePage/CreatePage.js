@@ -1,27 +1,42 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styles from './CreatePage.module.css';
 import {useHttp} from '../../hooks/http.hook';
 import {AuthContext} from '../../context/AuthContext';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 import MarkdownBtnsPanel from
   '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
-import {addPost as addPostAction} from '../../redux/actions';
+import {
+  addPost as addPostAction,
+  updatePost as updatePostAction,
+} from '../../redux/actions';
 
-const CreatePage = ({addPost, newPost}) => {
+const CreatePage = ({addPost, updatePost, currentPost}) => {
   const history = useHistory();
-  const auth = useContext(AuthContext);
-  const {token} = auth;
+  const {id} = useParams();
+  const {token} = useContext(AuthContext);
   const {request} = useHttp();
+  const postInitState = {
+    title: '',
+    description: '',
+    content: '',
+    image: null,
+    technology: '',
+  };
   const [link, setLink] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [postContent, setPostContent] = useState('');
-  const [image, setImage] = useState(null);
-  const [technology, setTechnology] = useState('');
+  const [post, setPost] = useState(postInitState);
   const MAX_TITLE_LENGTH = 60;
   const MAX_DESC_LENGTH = 120;
+  const {title, description, content, image, technology} = post;
+
+  useEffect(() => {
+    if (id && currentPost._id === id) {
+      setPost(currentPost);
+    } else {
+      setPost(postInitState);
+    }
+  }, [currentPost, id]);
 
   const addLink = async (event) => {
     event.preventDefault();
@@ -30,7 +45,7 @@ const CreatePage = ({addPost, newPost}) => {
           '/api/link/generate',
           'POST',
           {from: link},
-          {Authorization: `Bearer ${auth.token}`},
+          {Authorization: `Bearer ${token}`},
       );
       history.push(`/detail/${data.link._id}`);
     } catch (e) {
@@ -41,27 +56,34 @@ const CreatePage = ({addPost, newPost}) => {
   const onFileChosen = (file) => {
     const fileReader = new FileReader();
     fileReader.onloadend = () => {
-      setImage(fileReader.result);
+      setPost({...post, image: fileReader.result});
     };
     fileReader.readAsDataURL(file);
   };
 
   const onSymbolSelect = (event, symbol) => {
     event.preventDefault();
-    setPostContent(`${postContent}${symbol}`);
+    const {content} = post;
+    setPost({...post, content: `${content}${symbol}`});
   };
 
   const createPost = (e) => {
     e.preventDefault();
     addPost(
         token,
-        {
-          title,
-          description,
-          content: postContent,
-          image,
-          technology,
+        post,
+        (id) => {
+          history.push(`/post/${id}`);
         },
+    );
+  };
+
+  const updateCurrentPost = (e) => {
+    e.preventDefault();
+    updatePost(
+        token,
+        id,
+        post,
         (id) => {
           history.push(`/post/${id}`);
         },
@@ -94,7 +116,7 @@ const CreatePage = ({addPost, newPost}) => {
             id="post"
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setPost({...post, title: e.target.value})}
           />
           <label
             htmlFor="post"
@@ -110,7 +132,7 @@ const CreatePage = ({addPost, newPost}) => {
             id="technology"
             type="text"
             value={technology}
-            onChange={(e) => setTechnology(e.target.value)}
+            onChange={(e) => setPost({...post, technology: e.target.value})}
           />
           <label
             htmlFor="technology"
@@ -129,7 +151,7 @@ const CreatePage = ({addPost, newPost}) => {
             id="description"
             placeholder="Введите текст.."
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setPost({...post, description: e.target.value})}
           />
           <label
             htmlFor="description"
@@ -147,8 +169,8 @@ const CreatePage = ({addPost, newPost}) => {
             className={styles.postContentTextarea}
             placeholder="Введите текст.."
             id="postContent"
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
+            value={content}
+            onChange={(e) => setPost({...post, content: e.target.value})}
           />
         </div>
 
@@ -170,9 +192,15 @@ const CreatePage = ({addPost, newPost}) => {
           </div>
         </div>
 
-        <button onClick={createPost}>
-          Добавить пост
-        </button>
+        {id ? (
+          <button onClick={updateCurrentPost}>
+            Обновить пост
+          </button>
+        ) : (
+          <button onClick={createPost}>
+            Добавить пост
+          </button>)
+        }
       </form>
     </div>
   );
@@ -180,15 +208,21 @@ const CreatePage = ({addPost, newPost}) => {
 
 CreatePage.propTypes = {
   addPost: PropTypes.func,
-  newPost: PropTypes.object,
+  updatePost: PropTypes.func,
+  currentPost: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-  newPost: state.postsStore.currentPost,
+  currentPost: state.postsStore.currentPost,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addPost: (token, post, afterSuccess) => dispatch(addPostAction(token, post, afterSuccess)),
+  addPost: (token, post, afterSuccess) => {
+    dispatch(addPostAction(token, post, afterSuccess));
+  },
+  updatePost: (token, id, post, afterSuccess) => {
+    dispatch(updatePostAction(token, id, post, afterSuccess));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);

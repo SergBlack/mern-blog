@@ -32,8 +32,14 @@ const PostPage = ({
     if (!posts.length) {
       fetchPosts();
     }
-    fetchPost(id);
+    if (!currentPost) {
+      fetchPost(id);
+    }
   }, []);
+
+  useEffect(() => {
+    history.push(`/post/${currentPost._id}`);
+  }, [currentPost]);
 
   const openPost = (e, id) => {
     e.preventDefault();
@@ -42,16 +48,12 @@ const PostPage = ({
   };
 
   const updatePost = (id) => {
-    history.push(`/create/${id}`);
+    history.push(`/post/update/${id}`);
   };
 
   const removePost = (id) => {
     if (window.confirm('Удалить пост?')) {
-      deletePost(
-          token,
-          id,
-          history.push(`/post/${currentPost.id}`),
-      );
+      deletePost(token, id);
     }
   };
 
@@ -114,9 +116,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchPost: (id) => dispatch(fetchPostAction(id)),
   fetchPosts: () => dispatch(fetchPostsAction()),
-  deletePost: (token, id, afterSuccess) => {
-    dispatch(deletePostAction(token, id, afterSuccess));
-  },
+  deletePost: (token, id) => dispatch(deletePostAction(token, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

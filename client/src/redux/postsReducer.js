@@ -37,8 +37,17 @@ export const postsReducer = (state = initialState, action) => {
       };
     }
     case acts.UPDATE_POST: {
+      const updatedPost = action.payload.post;
+      const updatedPosts = state.posts.map((post) => {
+        if (post._id === updatedPost._id) {
+          return updatedPost;
+        }
+        return post;
+      });
       return {
         ...state,
+        posts: updatedPosts,
+        currentPost: updatedPost,
       };
     }
     default: return state;

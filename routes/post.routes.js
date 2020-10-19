@@ -61,21 +61,25 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// router.put('/:id/update', auth, async (req, res) => {
-//   try {
-//     const {id} = req.body;
-//     const post = await Post.findOne({_id: id});
-//     if (!post) {
-//       res.status(404)
-//         .json({message: 'Ошибка. Поста с таким ID не существует.'});
-//     } else {
-//       post.content = req.body.content;
-//     }
-//     post.save();
-//     res.json(post);
-//   } catch (e) {
-//     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
-//   }
-// });
+router.put('/update/:id', auth, async (req, res) => {
+  try {
+    const {_id, title, description, content, image, technology} = req.body;
+    const post = await Post.findOne({_id});
+    if (!post) {
+      res.status(404)
+          .json({message: 'Ошибка. Поста с таким ID не существует.'});
+    } else {
+      post.title = title;
+      post.description = description;
+      post.content = content;
+      post.image = image;
+      post.technology = technology;
+    }
+    post.save();
+    res.json({post});
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
+  }
+});
 
 module.exports = router;
