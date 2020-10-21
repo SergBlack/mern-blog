@@ -24,7 +24,7 @@ const PostsList = ({posts}) => {
           >
             <a
               className={styles.cardActionArea}
-              href=""
+              href={'/'}
               onClick={(e) => openPost(e, post._id)}
             >
               <div className={styles.card}>
@@ -37,7 +37,11 @@ const PostsList = ({posts}) => {
                 <div className={styles.cardMedia}
                   // style={{backgroundImage: `url(${post.image})`}}
                 >
-                  <img className={styles.cardImage} src={post.image}/>
+                  <img
+                    className={styles.cardImage}
+                    src={post.image}
+                    alt="cardImage"
+                  />
                 </div>
                 <p className={styles.cardDescription}>
                   {post.description}

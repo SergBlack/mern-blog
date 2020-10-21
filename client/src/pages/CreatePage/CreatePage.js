@@ -36,7 +36,7 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
     } else {
       setPost(postInitState);
     }
-  }, [currentPost, id]);
+  }, [currentPost, id, postInitState]);
 
   const addLink = async (event) => {
     event.preventDefault();

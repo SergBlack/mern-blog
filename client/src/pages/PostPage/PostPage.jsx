@@ -32,14 +32,14 @@ const PostPage = ({
     if (!posts.length) {
       fetchPosts();
     }
-    if (!currentPost) {
+    if (currentPost._id !== id) {
       fetchPost(id);
     }
   }, []);
 
   useEffect(() => {
     history.push(`/post/${currentPost._id}`);
-  }, [currentPost]);
+  }, [currentPost, history]);
 
   const openPost = (e, id) => {
     e.preventDefault();
