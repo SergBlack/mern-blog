@@ -11,22 +11,17 @@ const MarkdownBtnsPanel = ({onSymbolSelect}) => {
       <button onClick={(e) => onSymbolSelect(e, '\n#### ')}>H4</button>
       <button onClick={(e) => onSymbolSelect(e, '\n##### ')}>H5</button>
       <button onClick={(e) => onSymbolSelect(e, '\n###### ')}>H6</button>
-      <button onClick={(e) => onSymbolSelect(e, '\n- ')}>ul</button>
-      <button onClick={(e) => onSymbolSelect(e, '\n> ')}>bq</button>
+      <button onClick={(e) => onSymbolSelect(e, '\n- ')}>List</button>
+      <button onClick={(e) => onSymbolSelect(e, '\n> ')}>Quote</button>
       <button
-        onClick={
-          (e) => onSymbolSelect(
-              e,
-              '\n[type name](http://type_url) - type description\n',
-          )
-        }
+        onClick={(e) => onSymbolSelect(e, '\n[type name](http://type_url) - type description\n')}
       >
-        url
+        URL
       </button>
       <button
         onClick={(e) => onSymbolSelect(e, '```js\n\n insert code \n\n```')}
       >
-        code
+        Code
       </button>
 
     </div>
@@ -35,6 +30,6 @@ const MarkdownBtnsPanel = ({onSymbolSelect}) => {
 
 MarkdownBtnsPanel.propTypes = {
   onSymbolSelect: PropTypes.func,
-}
+};
 
 export default MarkdownBtnsPanel;

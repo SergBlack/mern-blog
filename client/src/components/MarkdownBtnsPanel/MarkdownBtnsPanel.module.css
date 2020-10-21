@@ -6,8 +6,8 @@
 .btnPanel button {
   font-size: 0.8rem;
   height: 34px;
-  width: 34px;
-  padding: 0;
+  min-width: 34px;
+  padding: 4px;
   border: 1px solid #cfcfcf;
   background-color: #ffffff;
   border-radius: 2px;
