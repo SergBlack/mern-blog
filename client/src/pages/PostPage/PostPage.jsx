@@ -59,7 +59,7 @@ const PostPage = ({
 
   return (
     <div className={styles.postPage}>
-      <PostsAsideBar posts={posts} openPost={openPost} loadingPosts={loading} />
+      <PostsAsideBar posts={posts} openPost={openPost} />
       <div className={styles.currentPostContainer}>
         {
           loading ?
@@ -110,7 +110,7 @@ PostPage.propTypes = {
 const mapStateToProps = (state) => ({
   posts: state.postsStore.posts,
   currentPost: state.postsStore.currentPost,
-  loading: state.app.loading,
+  loading: state.app.loadingPost,
 });
 
 const mapDispatchToProps = (dispatch) => ({

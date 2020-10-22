@@ -111,7 +111,7 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   posts: state.postsStore.posts,
-  loading: state.app.loading,
+  loading: state.app.loadingPosts,
 });
 
 const mapDispatchToProps = (dispatch) => ({

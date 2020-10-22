@@ -32,7 +32,7 @@ PostsAsideBar.propTypes = {
 };
 
 const mapDispatchToProps = (state) => ({
-  loading: state.app.loading,
+  loading: state.app.loadingPosts,
 });
 
 export default connect(mapDispatchToProps)(PostsAsideBar);
