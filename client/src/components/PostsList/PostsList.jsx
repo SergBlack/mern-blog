@@ -6,9 +6,6 @@ import styles from './PostsList.module.css';
 const PostsList = ({posts}) => {
   const history = useHistory();
 
-  // const postsList = posts.splice(0, 3);
-  const postsList = posts;
-
   const openPost = (e, id) => {
     e.preventDefault();
     history.push(`/post/${id}`);
@@ -17,7 +14,7 @@ const PostsList = ({posts}) => {
   return (
     <>
       {
-        postsList.map((post) => (
+        posts.map((post) => (
           <div
             key={post._id}
             className={styles.postCard}
@@ -34,14 +31,12 @@ const PostsList = ({posts}) => {
                 <div className={styles.cardData}>
                   {new Date(post.date).toLocaleDateString('ru-RU')}
                 </div>
-                <div className={styles.cardMedia}
-                  // style={{backgroundImage: `url(${post.image})`}}
-                >
-                  <img
+                <div className={styles.cardMedia}>
+                  {!!post.image && <img
                     className={styles.cardImage}
                     src={post.image}
                     alt="cardImage"
-                  />
+                  />}
                 </div>
                 <p className={styles.cardDescription}>
                   {post.description}
