@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
-import styles from './PostsList.module.css';
+import styles from './FeaturedPosts.module.css';
 import PostCard from '../PostCard/PostCard';
 
-const PostsList = ({posts}) => {
+const FeaturedPosts = ({posts}) => {
   const history = useHistory();
 
   const openPost = (e, id) => {
@@ -14,7 +14,7 @@ const PostsList = ({posts}) => {
 
   return (
     <div className={styles.container}>
-      {posts.map((post) => (
+      {posts && posts.map((post) => (
         <PostCard
           key={post._id}
           id={post._id}
@@ -23,15 +23,15 @@ const PostsList = ({posts}) => {
           image={post.image}
           description={post.description}
           onClick={openPost}
-          type="small"
+          type="large"
         />
       ))}
     </div>
   );
 };
 
-PostsList.propTypes = {
+FeaturedPosts.propTypes = {
   posts: PropTypes.array,
 };
 
-export default PostsList;
+export default FeaturedPosts;

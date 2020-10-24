@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {fetchPosts as fetchPostsAction} from '../redux/actions';
 import MainPost from '../components/MainPost';
-import FeaturedPost from '../components/FeaturedPost';
+import FeaturedPost from '../components/FeaturedPosts/FeaturedPosts';
 import PostsList from '../components/PostsList/PostsList';
 import Sidebar from '../components/Sidebar';
 import Grid from '@material-ui/core/Grid';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   postsListWrapper: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '72%',
     margin: '-8px -8px',
   },
