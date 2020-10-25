@@ -58,10 +58,10 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
     fileReader.readAsDataURL(file);
   };
 
-  const onSymbolSelect = (event, symbol) => {
+  const onMarkdownBtnClick = (event, elem) => {
     event.preventDefault();
     const {content} = post;
-    setPost({...post, content: `${content}${symbol}`});
+    setPost({...post, content: `${content}${elem}`});
   };
 
   const createPost = (e) => {
@@ -160,7 +160,7 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
 
         <div>
           <div>Текст поста</div>
-          <MarkdownBtnsPanel onSymbolSelect={onSymbolSelect}/>
+          <MarkdownBtnsPanel onClick={onMarkdownBtnClick}/>
           <label htmlFor="postContent">Введите сообщение поста</label>
           <textarea
             className={styles.postContentTextarea}
