@@ -17,15 +17,14 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   const {id} = useParams();
   const {token} = useContext(AuthContext);
   const {request} = useHttp();
-  const postInitState = {
+  const [link, setLink] = useState('');
+  const [post, setPost] = useState({
     title: '',
     description: '',
     content: '',
     image: null,
     technology: '',
-  };
-  const [link, setLink] = useState('');
-  const [post, setPost] = useState(postInitState);
+  });
   const MAX_TITLE_LENGTH = 60;
   const MAX_DESC_LENGTH = 120;
   const {title, description, content, image, technology} = post;
@@ -33,10 +32,8 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   useEffect(() => {
     if (id && currentPost._id === id) {
       setPost(currentPost);
-    } else {
-      setPost(postInitState);
     }
-  }, [currentPost, id, postInitState]);
+  }, [currentPost, id]);
 
   const addLink = async (event) => {
     event.preventDefault();
