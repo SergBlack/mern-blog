@@ -52,7 +52,7 @@ const PostCard = ({
           <div className={styles.cardMedia}>
             {!!image && <img
               className={styles.cardImage}
-              src={image}
+              src={image.path}
               alt="cardImage"
             />}
           </div>
@@ -77,7 +77,7 @@ PostCard.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string,
   date: PropTypes.string,
-  image: PropTypes.string,
+  image: PropTypes.object,
   description: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.string,

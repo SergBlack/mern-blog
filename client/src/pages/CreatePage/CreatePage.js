@@ -50,12 +50,8 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
     }
   };
 
-  const onFileChosen = (file) => {
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      setPost({...post, image: fileReader.result});
-    };
-    fileReader.readAsDataURL(file);
+  const onFileChosen = (e) => {
+    setPost({...post, image: e.target.files[0]});
   };
 
   const onMarkdownBtnClick = (event, elem) => {
@@ -66,9 +62,17 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
 
   const createPost = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('content', content);
+    formData.append('image', image);
+    formData.append('technology', technology);
+
     addPost(
         token,
-        post,
+        formData,
         (id) => {
           history.push(`/post/${id}`);
         },
@@ -77,10 +81,18 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
 
   const updateCurrentPost = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('content', content);
+    formData.append('image', image);
+    formData.append('technology', technology);
+
     updatePost(
         token,
         id,
-        post,
+        formData,
         (id) => {
           history.push(`/post/${id}`);
         },
@@ -89,7 +101,7 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
 
   return (
     <div className={styles.createFormContainer}>
-      <form>
+      <form encType="multipart/form-data">
         <div>
           <input
             placeholder="Вставьте ссылку"
@@ -175,7 +187,7 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
           <div>Файл</div>
           <input
             type="file"
-            onChange={(e) => onFileChosen(e.target.files[0])}
+            onChange={onFileChosen}
             id="file"
           />
           <div>

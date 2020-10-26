@@ -2,24 +2,48 @@ const {Router} = require('express');
 const Post = require('../models/Post');
 const auth = require('../middleware/auth.middleware');
 const router = Router();
+const multer = require('multer');
+const path = require('path');
 
-router.post('/new', auth, async (req, res) => {
-  try {
-    const {title, content, description, image, technology} = req.body;
-    const post = new Post({
-      title,
-      description,
-      content,
-      image,
-      owner: req.user.userId,
-      technology,
-    });
-    await post.save();
-    res.status(201).json({post});
-  } catch (e) {
-    res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
-  }
-},
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'public/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, 'IMAGE-' + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
+
+router.post(
+    '/new',
+    auth,
+    upload.single('image'),
+    async (req, res) => {
+      try {
+        const {title, content, description, technology} = req.body;
+        const post = new Post({
+          title,
+          description,
+          content,
+          image: req.file,
+          owner: req.user.userId,
+          technology,
+        });
+        await post.save();
+        res.status(201).json({post});
+      } catch (e) {
+        res.status(500).json(
+            {message: 'Что-то пошло не так, попробуйте еще раз.'},
+        );
+      }
+    },
 );
 
 router.get('/all', async (req, res) => {
@@ -61,10 +85,10 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.put('/update/:id', auth, async (req, res) => {
+router.put('/update/:id', auth, upload.single('image'), async (req, res) => {
   try {
-    const {_id, title, description, content, image, technology} = req.body;
-    const post = await Post.findOne({_id});
+    const {_id, title, content, description, technology} = req.body;
+    const post = await Post.findOne(_id);
     if (!post) {
       res.status(404)
           .json({message: 'Ошибка. Поста с таким ID не существует.'});
@@ -72,12 +96,13 @@ router.put('/update/:id', auth, async (req, res) => {
       post.title = title;
       post.description = description;
       post.content = content;
-      post.image = image;
+      post.image = req.file;
       post.technology = technology;
     }
     post.save();
     res.json({post});
   } catch (e) {
+    console.log(e);
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.'});
   }
 });

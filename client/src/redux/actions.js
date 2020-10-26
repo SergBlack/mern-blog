@@ -3,7 +3,8 @@ import axios from 'axios';
 
 const getConfig = (token) => ({
   headers: {
-    Authorization: `Bearer ${token}`,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'multipart/form-data',
   },
 });
 
@@ -37,12 +38,12 @@ export const fetchPost = (id) => {
   };
 };
 
-export const addPost = (token, post, afterSuccess) => {
+export const addPost = (token, formData, afterSuccess) => {
   return (dispatch) => {
     dispatch({type: acts.START_LOADING_POST});
     return axios.post(
         '/api/post/new',
-        post,
+        formData,
         getConfig(token),
     )
         .then((response) => {
@@ -57,12 +58,12 @@ export const addPost = (token, post, afterSuccess) => {
   };
 };
 
-export const updatePost = (token, id, post, afterSuccess) => {
+export const updatePost = (token, id, formData, afterSuccess) => {
   return (dispatch) => {
     dispatch({type: acts.START_LOADING_POST});
     return axios.put(
         `/api/post/update/${id}`,
-        post,
+        formData,
         getConfig(token),
     )
         .then((response) => {
