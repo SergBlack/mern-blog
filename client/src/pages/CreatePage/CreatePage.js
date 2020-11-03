@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import styles from './CreatePage.module.css';
 import {useHttp} from '../../hooks/http.hook';
@@ -17,6 +17,7 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   const {id} = useParams();
   const {token} = useContext(AuthContext);
   const {request} = useHttp();
+  const textAreaRef = useRef();
   const [link, setLink] = useState('');
   const [post, setPost] = useState({
     title: '',
@@ -24,10 +25,20 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
     content: '',
     image: null,
     technology: '',
+    selectionStart: 0,
+    selectionEnd: 0,
   });
   const MAX_TITLE_LENGTH = 60;
   const MAX_DESC_LENGTH = 120;
-  const {title, description, content, image, technology} = post;
+  const {
+    title,
+    description,
+    content,
+    image,
+    technology,
+    selectionStart,
+    selectionEnd,
+  } = post;
 
   useEffect(() => {
     if (id && currentPost._id === id) {
@@ -98,6 +109,8 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
         },
     );
   };
+  console.log('selectionStart', selectionStart)
+  console.log('selectionEnd', selectionEnd)
 
   return (
     <div className={styles.createFormContainer}>
@@ -179,7 +192,22 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
             placeholder="Введите текст.."
             id="postContent"
             value={content}
-            onChange={(e) => setPost({...post, content: e.target.value})}
+            ref={textAreaRef}
+            onChange={(e) => {
+              setPost({
+                ...post,
+                content: e.target.value,
+                selectionStart: textAreaRef.current.selectionStart,
+                selectionEnd: textAreaRef.current.selectionStart,
+              });
+            }}
+            onClick={(e) => {
+              setPost({
+                ...post,
+                selectionStart: textAreaRef.current.selectionStart,
+                selectionEnd: textAreaRef.current.selectionEnd,
+              });
+            }}
           />
         </div>
 
