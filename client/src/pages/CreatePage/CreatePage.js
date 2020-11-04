@@ -68,7 +68,16 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   const onMarkdownBtnClick = (event, elem) => {
     event.preventDefault();
     const {content} = post;
-    setPost({...post, content: `${content}${elem}`});
+    setPost({
+      ...post,
+      // eslint-disable-next-line max-len
+      content: `${content.slice(0, selectionStart)} ${elem} ${content.slice(selectionEnd)}`,
+    });
+    setTimeout(() => {
+      textAreaRef.current.focus();
+      const pos = selectionStart + elem.length + 1;
+      textAreaRef.current.setSelectionRange(pos, pos);
+    }, 0);
   };
 
   const createPost = (e) => {
@@ -109,8 +118,23 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
         },
     );
   };
-  console.log('selectionStart', selectionStart)
-  console.log('selectionEnd', selectionEnd)
+
+  const onTextareaChange = (e) => {
+    setPost({
+      ...post,
+      content: e.target.value,
+      selectionStart: textAreaRef.current.selectionStart,
+      selectionEnd: textAreaRef.current.selectionStart,
+    });
+  };
+
+  const onTextareaClick = () => {
+    setPost({
+      ...post,
+      selectionStart: textAreaRef.current.selectionStart,
+      selectionEnd: textAreaRef.current.selectionEnd,
+    });
+  };
 
   return (
     <div className={styles.createFormContainer}>
@@ -193,21 +217,8 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
             id="postContent"
             value={content}
             ref={textAreaRef}
-            onChange={(e) => {
-              setPost({
-                ...post,
-                content: e.target.value,
-                selectionStart: textAreaRef.current.selectionStart,
-                selectionEnd: textAreaRef.current.selectionStart,
-              });
-            }}
-            onClick={(e) => {
-              setPost({
-                ...post,
-                selectionStart: textAreaRef.current.selectionStart,
-                selectionEnd: textAreaRef.current.selectionEnd,
-              });
-            }}
+            onChange={onTextareaChange}
+            onClick={onTextareaClick}
           />
         </div>
 
