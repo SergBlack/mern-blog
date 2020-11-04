@@ -1,16 +1,17 @@
 import React, {useContext, useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
-import styles from './CreatePage.module.css';
-import {useHttp} from '../../hooks/http.hook';
-import {AuthContext} from '../../context/AuthContext';
 import {useHistory, useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
-import MarkdownBtnsPanel from
-  '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
 import {
   addPost as addPostAction,
   updatePost as updatePostAction,
 } from '../../redux/actions';
+import {connect} from 'react-redux';
+import {useHttp} from '../../hooks/http.hook';
+import useStateWithCallbackLazy from '../../hooks/useStateWithCallback';
+import {AuthContext} from '../../context/AuthContext';
+import styles from './CreatePage.module.css';
+import MarkdownBtnsPanel from
+  '../../components/MarkdownBtnsPanel/MarkdownBtnsPanel';
 
 const CreatePage = ({addPost, updatePost, currentPost}) => {
   const history = useHistory();
@@ -19,15 +20,15 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   const {request} = useHttp();
   const textAreaRef = useRef();
   const [link, setLink] = useState('');
-  const [post, setPost] = useState({
+  const [post, setPost] = useStateWithCallbackLazy({
     title: '',
     description: '',
     content: '',
     image: null,
     technology: '',
-    selectionStart: 0,
-    selectionEnd: 0,
   });
+  const [selectionStart, setSelectionStart] = useState(0);
+  const [selectionEnd, setSelectionEnd] = useState(0);
   const MAX_TITLE_LENGTH = 60;
   const MAX_DESC_LENGTH = 120;
   const {
@@ -36,8 +37,6 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
     content,
     image,
     technology,
-    selectionStart,
-    selectionEnd,
   } = post;
 
   useEffect(() => {
@@ -68,16 +67,18 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   const onMarkdownBtnClick = (event, elem) => {
     event.preventDefault();
     const {content} = post;
-    setPost({
-      ...post,
-      // eslint-disable-next-line max-len
-      content: `${content.slice(0, selectionStart)} ${elem} ${content.slice(selectionEnd)}`,
-    });
-    setTimeout(() => {
-      textAreaRef.current.focus();
-      const pos = selectionStart + elem.length + 1;
-      textAreaRef.current.setSelectionRange(pos, pos);
-    }, 0);
+    setPost(
+        {
+          ...post,
+          // eslint-disable-next-line max-len
+          content: `${content.slice(0, selectionStart)} ${elem} ${content.slice(selectionEnd)}`,
+        },
+        () => {
+          textAreaRef.current.focus();
+          const pos = selectionStart + elem.length + 1;
+          textAreaRef.current.setSelectionRange(pos, pos);
+        },
+    );
   };
 
   const createPost = (e) => {
@@ -120,20 +121,14 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
   };
 
   const onTextareaChange = (e) => {
-    setPost({
-      ...post,
-      content: e.target.value,
-      selectionStart: textAreaRef.current.selectionStart,
-      selectionEnd: textAreaRef.current.selectionStart,
-    });
+    setPost({...post, content: e.target.value});
+    setSelectionStart(textAreaRef.current.selectionStart);
+    setSelectionEnd(textAreaRef.current.selectionStart);
   };
 
   const onTextareaClick = () => {
-    setPost({
-      ...post,
-      selectionStart: textAreaRef.current.selectionStart,
-      selectionEnd: textAreaRef.current.selectionEnd,
-    });
+    setSelectionStart(textAreaRef.current.selectionStart);
+    setSelectionEnd(textAreaRef.current.selectionEnd);
   };
 
   return (
