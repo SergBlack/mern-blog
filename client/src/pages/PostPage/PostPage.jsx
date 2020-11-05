@@ -12,8 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import {CodeBlock} from '../../utils/markdown';
 import {AuthContext} from '../../context/AuthContext';
 import PostsAsideBar from '../../components/PostsAsideBar/PostsAsideBar';
-import CircularProgress from
-  '@material-ui/core/CircularProgress/CircularProgress';
+import Preloader from '../../components/Preloader/Preloader';
 
 const PostPage = ({
   fetchPost,
@@ -63,7 +62,7 @@ const PostPage = ({
       <div className={styles.currentPostContainer}>
         {
           loading ?
-            <CircularProgress /> :
+            <Preloader /> :
             (
               <>
                 <h1 className={styles.currentPostTitle}>{currentPost.title}</h1>

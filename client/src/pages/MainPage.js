@@ -6,11 +6,12 @@ import MainPost from '../components/MainPost';
 import FeaturedPost from '../components/FeaturedPosts/FeaturedPosts';
 import PostsList from '../components/PostsList/PostsList';
 import Sidebar from '../components/Sidebar';
+import Preloader from '../components/Preloader/Preloader';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -61,7 +62,7 @@ const MainPage = ({posts, fetchPosts, loading}) => {
               alignItems="center"
               className={classes.progressBar}
             >
-              <CircularProgress />
+              <Preloader />
             </Grid> : <MainPost mainPost={posts && posts[0]}/>
         }
         <Typography variant="h6" className={classes.section}>
@@ -75,7 +76,7 @@ const MainPage = ({posts, fetchPosts, loading}) => {
             alignItems="center"
             className={classes.progressBar}
           >
-            <CircularProgress />
+            <Preloader />
           </Grid> : <FeaturedPost posts={posts.slice(1, 4)}/>
         }
         <Typography variant="h6" className={classes.section}>
@@ -86,7 +87,7 @@ const MainPage = ({posts, fetchPosts, loading}) => {
           <div className={classes.postsListWrapper}>
             {loading || posts.length === 0 ?
               <div>
-                <CircularProgress/>
+                <Preloader/>
               </div> :
               <PostsList
                 posts={posts.slice(4)}
