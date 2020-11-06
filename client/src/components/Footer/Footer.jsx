@@ -1,21 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import SocialLinkButton from '../SocialIcon/SocialLinkButton';
+import Copyright from '../Copyright/Copyright';
 import styles from './Footer.module.css';
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        http://mysite.org
-      </Link>
-      {` ${new Date().getFullYear()}`}
-    </Typography>
-  );
-};
 
 const Footer = () => {
   const socialLinksSprite = require('../assets/socialLinksSprite.svg');
@@ -40,7 +27,10 @@ const Footer = () => {
           xlinkHref={`${socialLinksSprite}#icon-linkedin`}
         />
       </div>
-      <Copyright />
+      <Copyright
+        href=""
+        date={` ${new Date().getFullYear()}`}
+      />
     </footer>
   );
 };
