@@ -4,7 +4,7 @@ import {useRoutes} from './routes';
 import {useAuth} from './hooks/auth.hook';
 import {AuthContext} from './context/AuthContext';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import Preloader from './components/Preloader/Preloader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
