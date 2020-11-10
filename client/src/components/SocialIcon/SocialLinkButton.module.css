@@ -2,13 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
   background: transparent;
   border: 1px solid #FCFCFC;
   transition: background-color .4s ease-out;
   cursor: pointer;
   border-radius: 50%;
+  text-decoration: none;
 }
 
 .socialLink:hover {
@@ -19,6 +18,7 @@
   fill: #737373;
   width: 28px;
   height: 28px;
+  margin-right: 8px;
 }
 
 .socialLinkBlue:hover {
@@ -31,4 +31,15 @@
 
 .socialLinkBlue svg {
   fill: #3f51b5;
+}
+
+.socialLinkDescription {
+  color: #3f51b5;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.socialLinkDescription:hover {
+  color: #4c64ff;
 }

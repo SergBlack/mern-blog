@@ -5,7 +5,7 @@ import {fetchPosts as fetchPostsAction} from '../redux/actions';
 import MainPost from '../components/MainPost';
 import FeaturedPost from '../components/FeaturedPosts/FeaturedPosts';
 import PostsList from '../components/PostsList/PostsList';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import Preloader from '../components/Preloader/Preloader';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
