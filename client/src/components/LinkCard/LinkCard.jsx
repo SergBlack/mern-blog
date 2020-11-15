@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export const LinkCard = ({link}) => {
+const LinkCard = ({link}) => {
   return (
     <>
       <h2>Ссылка</h2>
@@ -30,3 +31,9 @@ export const LinkCard = ({link}) => {
     </>
   );
 };
+
+LinkCard.propTypes = {
+  link: PropTypes.object,
+};
+
+export default LinkCard;

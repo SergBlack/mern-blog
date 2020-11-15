@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {useHttp} from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext';
-import {LinkCard} from '../components/LinkCard';
+import LinkCard from '../components/LinkCard/LinkCard';
 
 export const DetailPage = () => {
   const {token} = useContext(AuthContext);
@@ -25,7 +25,7 @@ export const DetailPage = () => {
 
   return (
     <>
-      { !loading && link && <LinkCard link={link}/> }
+      {!loading && link && <LinkCard link={link}/>}
     </>
   );
 };

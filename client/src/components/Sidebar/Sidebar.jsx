@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SocialLinkButton from '../SocialIcon/SocialLinkButton';
+import SocialLinkButton from '../SocialLinkButton/SocialLinkButton';
 import styles from './Sidebar.module.css';
 
 const sidebarInfo = {
