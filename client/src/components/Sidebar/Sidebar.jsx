@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SocialLinkButton from '../SocialLinkButton/SocialLinkButton';
+import IconButton from '../IconButton/IconButton';
 import styles from './Sidebar.module.css';
 
 const sidebarInfo = {
@@ -30,19 +30,19 @@ const Sidebar = () => {
         Контакты в соцсетях
       </div>
       <div className={styles.sidebarSocialLinks}>
-        <SocialLinkButton
+        <IconButton
           href="https://vk.com/id2329393"
           xlinkHref={`${socialLinksSprite}#icon-vk`}
           color="blue"
           description="VKontakte"
         />
-        <SocialLinkButton
+        <IconButton
           href="https://github.com/SergBlack"
           xlinkHref={`${socialLinksSprite}#icon-github`}
           color="blue"
           description="GitHub"
         />
-        <SocialLinkButton
+        <IconButton
           href="https://linkedin.com/in/sergey-osipchuk"
           xlinkHref={`${socialLinksSprite}#icon-linkedin`}
           color="blue"

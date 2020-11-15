@@ -3,7 +3,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {useRoutes} from './routes';
 import {useAuth} from './hooks/auth.hook';
 import {AuthContext} from './context/AuthContext';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Preloader from './components/Preloader/Preloader';
 import CssBaseline from '@material-ui/core/CssBaseline';

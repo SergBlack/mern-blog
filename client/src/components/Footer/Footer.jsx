@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SocialLinkButton from '../SocialLinkButton/SocialLinkButton';
+import IconButton from '../IconButton/IconButton';
 import Copyright from '../Copyright/Copyright';
 import styles from './Footer.module.css';
 
@@ -14,15 +14,15 @@ const Footer = () => {
         Блог совершеннолетнего программиста
       </p>
       <div className={styles.socialLinks}>
-        <SocialLinkButton
+        <IconButton
           href="https://vk.com/id2329393"
           xlinkHref={`${socialLinksSprite}#icon-vk`}
         />
-        <SocialLinkButton
+        <IconButton
           href="https://github.com/SergBlack"
           xlinkHref={`${socialLinksSprite}#icon-github`}
         />
-        <SocialLinkButton
+        <IconButton
           href="https://linkedin.com/in/sergey-osipchuk"
           xlinkHref={`${socialLinksSprite}#icon-linkedin`}
         />

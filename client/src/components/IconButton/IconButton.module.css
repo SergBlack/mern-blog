@@ -1,4 +1,4 @@
-.socialLink {
+.link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,36 +10,40 @@
   text-decoration: none;
 }
 
-.socialLink:hover {
+.link:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.socialLink svg {
+.link svg {
   fill: #737373;
-  width: 28px;
-  height: 28px;
-  margin-right: 8px;
+  margin: 8px;
 }
 
-.socialLinkBlue:hover {
+.linkBlue:hover {
   background-color: #ffffff;
 }
 
-.socialLinkBlue:hover svg {
+.linkBlue:hover svg {
   fill: #4c64ff;
 }
 
-.socialLinkBlue svg {
+.linkBlue svg {
   fill: #3f51b5;
 }
 
-.socialLinkDescription {
+.svgContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description {
   color: #3f51b5;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
 }
 
-.socialLinkDescription:hover {
+.description:hover {
   color: #4c64ff;
 }
