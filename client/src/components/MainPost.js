@@ -55,7 +55,7 @@ const MainPost = ({mainPost}) => {
   return (
     <Paper
       className={classes.mainPost}
-      style={{backgroundImage: `url(${mainPost.image.path})`}}
+      style={{backgroundImage: `url(${mainPost?.image?.path})`}}
     >
       <div className={classes.overlay} />
       <Grid container>
