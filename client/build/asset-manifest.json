@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7573b318.chunk.css",
+    "main.js": "/static/js/main.c1a62fa7.chunk.js",
+    "main.js.map": "/static/js/main.c1a62fa7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.09b85ec0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.09b85ec0.js.map",
+    "static/js/2.e3c3f1c4.chunk.js": "/static/js/2.e3c3f1c4.chunk.js",
+    "static/js/2.e3c3f1c4.chunk.js.map": "/static/js/2.e3c3f1c4.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.52462929fc3173b8568d19dcfa92cc92.js": "/precache-manifest.52462929fc3173b8568d19dcfa92cc92.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.7573b318.chunk.css.map": "/static/css/main.7573b318.chunk.css.map",
+    "static/js/2.e3c3f1c4.chunk.js.LICENSE.txt": "/static/js/2.e3c3f1c4.chunk.js.LICENSE.txt",
+    "static/media/navbarIcons.svg": "/static/media/navbarIcons.e2957b1c.svg",
+    "static/media/preloader.svg": "/static/media/preloader.d8b3f08b.svg",
+    "static/media/socialLinksSprite.svg": "/static/media/socialLinksSprite.9641b6d1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.09b85ec0.js",
+    "static/js/2.e3c3f1c4.chunk.js",
+    "static/css/main.7573b318.chunk.css",
+    "static/js/main.c1a62fa7.chunk.js"
+  ]
+}
