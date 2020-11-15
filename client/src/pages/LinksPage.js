@@ -1,7 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext';
-import {LinksList} from '../components/LinksList';
+import LinksList from '../components/LinksList/LinksList';
 
 export const LinksPage = () => {
   const [links, setLinks] = useState([]);
