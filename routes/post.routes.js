@@ -4,6 +4,7 @@ const auth = require('../middleware/auth.middleware');
 const router = Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -32,7 +33,10 @@ router.post(
           title,
           description,
           content,
-          image: req.file,
+          image: {
+            data: fs.readFileSync(req.file.path),
+            contentType: req.file.mimetype,
+          },
           owner: req.user.userId,
           technology,
         });
@@ -96,7 +100,8 @@ router.put('/update/:id', auth, upload.single('image'), async (req, res) => {
       post.title = title;
       post.description = description;
       post.content = content;
-      post.image = req.file;
+      post.image.data = fs.readFileSync(req.file.path);
+      post.image.contentType = req.file.mimetype;
       post.technology = technology;
     }
     post.save();

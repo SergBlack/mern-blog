@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './PostCard.module.css';
+import arrayBufferToBase64 from '../../utils/arrayBufferToBase64';
 
 const PostCard = ({
   id,
@@ -52,7 +53,7 @@ const PostCard = ({
           <div className={styles.cardMedia}>
             {!!image && <img
               className={styles.cardImage}
-              src={image.path}
+              src={`data:image/jpeg;base64,${arrayBufferToBase64(image)}`}
               alt="cardImage"
             />}
           </div>

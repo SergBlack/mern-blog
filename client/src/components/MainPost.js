@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import arrayBufferToBase64 from '../utils/arrayBufferToBase64';
 
 const useStyles = makeStyles((theme) => ({
   mainPost: {
@@ -55,7 +56,8 @@ const MainPost = ({mainPost}) => {
   return (
     <Paper
       className={classes.mainPost}
-      style={{backgroundImage: `url(${mainPost?.image?.path})`}}
+      // eslint-disable-next-line max-len
+      style={{backgroundImage: `url(data:image/jpeg;base64,${arrayBufferToBase64(mainPost.image.data.data)})`}}
     >
       <div className={classes.overlay} />
       <Grid container>

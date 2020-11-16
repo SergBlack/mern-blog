@@ -20,7 +20,7 @@ const FeaturedPosts = ({posts}) => {
           id={post._id}
           title={post.title}
           date={post.date}
-          image={post.image}
+          image={post.image?.data?.data}
           description={post.description}
           onClick={openPost}
           type="large"

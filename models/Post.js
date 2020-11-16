@@ -8,7 +8,7 @@ const schema = new Schema({
   owner: {type: Types.ObjectId, ref: 'User'},
   comments: [{body: {type: String}, type: Date}],
   reads: {type: Number, default: 0},
-  image: {},
+  image: {data: Buffer, contentType: String},
 });
 
 module.exports = model('Post', schema);
