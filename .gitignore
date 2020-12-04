@@ -2,3 +2,4 @@ node_modules
 .idea
 templates
 .package-lock.json
+public

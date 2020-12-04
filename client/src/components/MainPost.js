@@ -57,7 +57,7 @@ const MainPost = ({mainPost}) => {
     <Paper
       className={classes.mainPost}
       // eslint-disable-next-line max-len
-      style={{backgroundImage: `url(data:image/jpeg;base64,${arrayBufferToBase64(mainPost.image.data.data)})`}}
+      style={{backgroundImage: `url(data:image/jpeg;base64,${arrayBufferToBase64(mainPost?.image?.data?.data)})`}}
     >
       <div className={classes.overlay} />
       <Grid container>

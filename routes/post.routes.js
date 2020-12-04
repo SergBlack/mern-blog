@@ -29,20 +29,22 @@ router.post(
     async (req, res) => {
       try {
         const {title, content, description, technology} = req.body;
-        const post = new Post({
+        const newPost = {
           title,
           description,
           content,
-          image: {
-            data: fs.readFileSync(req.file.path),
-            contentType: req.file.mimetype,
-          },
           owner: req.user.userId,
           technology,
-        });
+        };
+        if (req.file) {
+          newPost.image.contentType = req.file.mimetype;
+          newPost.image.data = fs.readFileSync(req.file.path);
+        }
+        const post = new Post(newPost);
         await post.save();
         res.status(201).json({post});
       } catch (e) {
+        console.log(e)
         res.status(500).json(
             {message: 'Что-то пошло не так, попробуйте еще раз.'},
         );
@@ -91,8 +93,10 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/update/:id', auth, upload.single('image'), async (req, res) => {
   try {
-    const {_id, title, content, description, technology} = req.body;
-    const post = await Post.findOne(_id);
+    const {title, content, description, technology} = req.body;
+    const {id} = req.params;
+    console.log(req.params)
+    const post = await Post.findOne({_id: id});
     if (!post) {
       res.status(404)
           .json({message: 'Ошибка. Поста с таким ID не существует.'});
@@ -100,9 +104,11 @@ router.put('/update/:id', auth, upload.single('image'), async (req, res) => {
       post.title = title;
       post.description = description;
       post.content = content;
-      post.image.data = fs.readFileSync(req.file.path);
-      post.image.contentType = req.file.mimetype;
       post.technology = technology;
+      if (req.file) {
+        post.image.contentType = req.file.mimetype;
+        post.image.data = fs.readFileSync(req.file.path);
+      }
     }
     post.save();
     res.json({post});

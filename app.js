@@ -2,13 +2,14 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 
 app.use(express.json({extended: true}));
 
 app.use('/public', express.static('public'));
-app.use(express.static('client/build'));
+// app.use(express.static('client/build'));
 
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/link', require('./routes/link.routes'));
@@ -17,6 +18,16 @@ app.use('/api/post', require('./routes/post.routes'));
 
 // const PORT = config.get('port') || 5000;
 app.set('port', (process.env.PORT || 5000));
+
+if (process.env.NODE_ENV === 'production') {
+  // Exprees will serve up production assets
+  app.use(express.static('client/build'));
+
+  // Express serve up index.html file if it doesn't recognize route
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // eslint-disable-next-line require-jsdoc
 async function start() {
