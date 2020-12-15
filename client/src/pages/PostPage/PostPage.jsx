@@ -29,17 +29,11 @@ const PostPage = ({
 
   useEffect(() => {
     if (!posts.length) {
-
-      console.log('fetchPosts()')
       fetchPosts();
     }
     if (currentPost._id !== id) {
-      console.log('fetchPost()')
       fetchPost(id);
     }
-    console.log('posts.length', posts.length)
-    console.log('currentPost._id', currentPost._id)
-    console.log('id', id)
   }, []);
 
   useEffect(() => {

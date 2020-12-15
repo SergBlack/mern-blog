@@ -1,0 +1,28 @@
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.sectionTitle {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.postsListWrapper {
+  display: flex;
+}
+
+.postsListContainer {
+  width: 71%;
+  margin-right: 16px;
+}
+
+.sidebarContainer {
+  margin-top: 16px;
+  width: 29%;
+}

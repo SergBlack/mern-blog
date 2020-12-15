@@ -28,7 +28,10 @@ const App = () => {
       token, login, logout, userId, isAuthenticated,
     }}>
       <BrowserRouter>
-        <Container maxWidth="lg">
+        <Container
+          maxWidth="lg"
+          style={{height: '100vh', display: 'flex', flexDirection: 'column'}}
+        >
           <CssBaseline>
             <Navbar />
             {ready ?

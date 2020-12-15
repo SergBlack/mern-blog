@@ -17,7 +17,7 @@ const Sidebar = () => {
   const socialLinksSprite = require('../assets/socialLinksSprite.svg');
 
   return (
-    <div>
+    <>
       <div className={styles.sidebarAbout}>
         <div className={styles.sidebarTitle}>
           {sidebarInfo.title}
@@ -49,7 +49,7 @@ const Sidebar = () => {
           description="LinkedIn"
         />
       </div>
-    </div>
+    </>
   );
 };
 

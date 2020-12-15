@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json({extended: true}));
 
 app.use('/public', express.static('public'));
-// app.use(express.static('client/build'));
 
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/link', require('./routes/link.routes'));

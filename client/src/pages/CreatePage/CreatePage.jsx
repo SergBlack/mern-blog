@@ -102,7 +102,6 @@ const CreatePage = ({addPost, updatePost, currentPost}) => {
 
   const updateCurrentPost = (e) => {
     e.preventDefault();
-    console.log(id)
 
     const formData = new FormData();
     formData.append('title', title);
