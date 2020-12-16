@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import styles from './LinksList.module.css';
+
 const LinksList = ({links}) => {
   if (!links.length) {
-    return <p className="center">Ссылок пока нет</p>;
+    return (
+      <div className={styles.links_container}>
+        <p className="center">Ссылок пока нет</p>
+      </div>
+    );
   }
 
   return (

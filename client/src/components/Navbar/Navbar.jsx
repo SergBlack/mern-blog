@@ -53,7 +53,7 @@ const Navbar = () => {
         <h2 className={styles.toolbarTitle}>
           Блог совершеннолетнего программиста
           <code className={styles.toolbarCode}>
-            import Me from &#34;real-life&#34;;
+            import BiggestJourney from &#34;dev-universe&#34;;
           </code>
         </h2>
         <IconButton
