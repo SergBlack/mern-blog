@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {fetchPosts as fetchPostsAction} from '../../redux/actions';
-import MainPost from '../../components/MainPost';
+import MainPost from '../../components/MainPost/MainPost';
 import Preloader from '../../components/Preloader/Preloader';
 import FeaturedPost from '../../components/FeaturedPosts/FeaturedPosts';
 import PostsList from '../../components/PostsList/PostsList';
